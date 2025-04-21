@@ -1,0 +1,5 @@
+tab_spaces = 2
+reorder_imports = true
+newline_style = "Unix"
+group_imports = "StdExternalCrate"
+imports_granularity = "Crate"
