@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
-use crate::repo::RepoType;
-use crate::space::SpaceSdkType;
+
+use crate::{repo::RepoType, space::SpaceSdkType};
 
 /// Request of [`crate::client::Client::create_repo`]
 #[derive(Debug, Serialize)]
@@ -74,8 +74,11 @@ impl CreateRepoRes {
 #[cfg(test)]
 mod test {
   use std::assert_matches::assert_matches;
-  use crate::api::{CreateRepoReq, CreateRepoRes};
-  use crate::repo::RepoType;
+
+  use crate::{
+    api::{CreateRepoReq, CreateRepoRes},
+    repo::RepoType,
+  };
 
   #[test]
   fn test_serde_req() {
@@ -93,5 +96,4 @@ mod test {
     let res = serde_json::from_str::<CreateRepoRes>(json);
     assert_matches!(res, Ok(v) if v.id() == "680673d1e332a61dd92e9237" && v.name == "dlzht/my-repo0" && v.url() == "https://huggingface.co/dlzht/my-repo0");
   }
-
 }

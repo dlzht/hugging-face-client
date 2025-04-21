@@ -1,12 +1,9 @@
 use serde::{Deserialize, Serialize};
 
-pub struct Repository {
-
-}
+pub struct Repository {}
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum RepoType {
-
   #[serde(rename = "dataset")]
   Dataset,
 
@@ -14,7 +11,7 @@ pub enum RepoType {
   Space,
 
   #[serde(rename = "model")]
-  Model
+  Model,
 }
 
 impl Default for RepoType {

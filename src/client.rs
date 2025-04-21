@@ -1,12 +1,11 @@
-use crate::api::{CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes};
+use crate::api::{
+  CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes,
+};
 
 /// Async client for Hugging Face Hub API
-pub struct Client {
-
-}
+pub struct Client {}
 
 impl Client {
-
   /// Endpoint: GET /api/models
   ///
   /// Get information from all models in the Hub

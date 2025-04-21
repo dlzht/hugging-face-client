@@ -12,7 +12,7 @@ pub enum SpaceSdkType {
   Docker,
 
   #[serde(rename = "static")]
-  Static
+  Static,
 }
 
 impl Default for SpaceSdkType {
@@ -24,6 +24,7 @@ impl Default for SpaceSdkType {
 #[cfg(test)]
 mod test {
   use std::assert_matches::assert_matches;
+
   use crate::space::SpaceSdkType;
 
   #[test]
