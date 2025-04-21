@@ -28,13 +28,13 @@ mod test {
 
   #[test]
   fn test_serde_sort_direction() {
-    let direction = vec![SortDirection::Descending];
+    let direction = SortDirection::Descending;
     let json = serde_json::to_string(&direction);
-    assert_matches!(json, Ok(v) if v == "[-1]");
+    assert_matches!(json, Ok(v) if v == "-1");
 
-    let json = "[-1]";
-    let direction = serde_json::from_str::<Vec<SortDirection>>(json);
-    assert_matches!(direction, Ok(v) if v == vec![SortDirection::Descending])
+    let json = "-1";
+    let direction = serde_json::from_str::<SortDirection>(json);
+    assert_matches!(direction, Ok(SortDirection::Descending))
   }
 
   #[test]
@@ -45,7 +45,7 @@ mod test {
 
     let json = "\"downloads\"";
     let field = serde_json::from_str::<SortField>(json);
-    assert_matches!(field, Ok(v) if v == SortField::Downloads);
+    assert_matches!(field, Ok(SortField::Downloads));
 
     let field = SortField::Likes;
     let json = serde_json::to_string(&field);
@@ -53,7 +53,7 @@ mod test {
 
     let json = "\"likes\"";
     let field = serde_json::from_str::<SortField>(json);
-    assert_matches!(field, Ok(v) if v == SortField::Likes);
+    assert_matches!(field, Ok(SortField::Likes));
 
     let field = SortField::TrendingScore;
     let json = serde_json::to_string(&field);
@@ -61,6 +61,6 @@ mod test {
 
     let json = "\"trendingScore\"";
     let field = serde_json::from_str::<SortField>(json);
-    assert_matches!(field, Ok(v) if v == SortField::TrendingScore);
+    assert_matches!(field, Ok(SortField::TrendingScore));
   }
 }
