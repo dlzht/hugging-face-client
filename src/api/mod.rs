@@ -8,3 +8,6 @@ pub use get_models::{GetModelsReq, GetModelsRes};
 
 mod get_model;
 pub use get_model::{GetModelReq, GetModelRes};
+
+mod create_repo;
+pub use create_repo::{CreateRepoReq, CreateRepoRes};

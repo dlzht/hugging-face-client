@@ -2,7 +2,7 @@ use serde::Serialize;
 
 use crate::{model::Model, tag::ModelTag};
 
-/// Request of `GET /api/models`
+/// Request of [`crate::client::Client::get_models`]
 #[derive(Debug, Default, Serialize)]
 pub struct GetModelsReq<'a> {
   #[serde(skip_serializing_if = "Option::is_none")]
