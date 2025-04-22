@@ -1,9 +1,12 @@
 //! Async hub client
 
 use reqwest::Client as ReqwestClient;
+use serde::{Deserialize, Serialize};
+use snafu::ResultExt;
 
-use crate::api::{
-  CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes,
+use crate::{
+  api::{CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes},
+  errors::{ReqwestClientSnafu, Result},
 };
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
@@ -54,9 +57,9 @@ impl Client {
   /// Endpoint: GET /api/models
   ///
   /// Get information from all models in the Hub
-  pub async fn get_models(&self, req: GetModelsReq<'_>) -> GetModelsRes {
-    // let req = self.http_client.get()
-    todo!()
+  pub async fn get_models(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
+    let url = format!("{}/api/models", &self.api_endpoint);
+    self.get_request(&url, Some(&req)).await
   }
 
   /// Endpoint: GET /api/models/{repo_id}
@@ -64,14 +67,65 @@ impl Client {
   /// Endpoint: GET /api/models/{repo_id}/revision/{revision}
   ///
   /// Get all information for a specific model
-  pub async fn get_model(&self, req: GetModelReq<'_>) -> GetModelRes {
-    todo!()
+  pub async fn get_model(&self, req: GetModelReq<'_>) -> Result<GetModelRes> {
+    let url = if let Some(revision) = req.revision {
+      format!(
+        "{}/api/models/{}/revision/{}",
+        &self.api_endpoint, req.repo_id, revision
+      )
+    } else {
+      format!("{}/api/models/{}", &self.api_endpoint, req.repo_id)
+    };
+    let req = if true { None } else { Some(&req) };
+    self.get_request(&url, req).await
   }
 
   /// Endpoint:  POST /api/repos/create
   ///
   /// Create a repository, model repo by default.
-  pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> CreateRepoRes {
-    todo!()
+  pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
+    let url = format!("{}/api/repo/create", &self.api_endpoint);
+    self.post_request(&url, Some(&req)).await
+  }
+}
+
+// private method
+impl Client {
+  async fn get_request<T: Serialize, U: for<'de> Deserialize<'de>>(
+    &self,
+    url: &str,
+    query: Option<&T>,
+  ) -> Result<U> {
+    let mut req = self.http_client.get(url).bearer_auth(&self.access_token);
+    if let Some(query) = query {
+      req = req.query(query);
+    }
+    let res = req
+      .send()
+      .await
+      .context(ReqwestClientSnafu)?
+      .json::<U>()
+      .await
+      .context(ReqwestClientSnafu)?;
+    Ok(res)
+  }
+
+  async fn post_request<T: Serialize, U: for<'de> Deserialize<'de>>(
+    &self,
+    url: &str,
+    body: Option<&T>,
+  ) -> Result<U> {
+    let mut req = self.http_client.post(url).bearer_auth(&self.access_token);
+    if let Some(body) = body {
+      req = req.json(body);
+    }
+    let res = req
+      .send()
+      .await
+      .context(ReqwestClientSnafu)?
+      .json::<U>()
+      .await
+      .context(ReqwestClientSnafu)?;
+    Ok(res)
   }
 }

@@ -20,6 +20,7 @@ impl Default for RepoType {
   }
 }
 
+#[cfg(test)]
 mod test {
   use std::assert_matches::assert_matches;
 
