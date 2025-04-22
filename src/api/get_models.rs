@@ -72,7 +72,7 @@ impl<'a> GetModelsReq<'a> {
   }
 }
 
-/// Response of `GET /api/models`
+/// Response of [`crate::client::Client::get_models`]
 pub type GetModelsRes = Vec<Model>;
 
 #[cfg(test)]
