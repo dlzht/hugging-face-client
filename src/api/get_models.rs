@@ -31,43 +31,43 @@ pub struct GetModelsReq<'a> {
 }
 
 impl<'a> GetModelsReq<'a> {
-  pub fn search(mut self, search: Option<&'a str>) -> Self {
-    self.search = search;
+  pub fn search(mut self, search: &'a str) -> Self {
+    self.search = Some(search);
     self
   }
 
-  pub fn author(mut self, author: Option<&'a str>) -> Self {
-    self.author = author;
+  pub fn author(mut self, author: &'a str) -> Self {
+    self.author = Some(author);
     self
   }
 
-  pub fn filter(mut self, filter: Option<&'a str>) -> Self {
-    self.filter = filter;
+  pub fn filter(mut self, filter: &'a str) -> Self {
+    self.filter = Some(filter);
     self
   }
 
-  pub fn sort(mut self, sort: Option<&'a str>) -> Self {
-    self.sort = sort;
+  pub fn sort(mut self, sort: &'a str) -> Self {
+    self.sort = Some(sort);
     self
   }
 
-  pub fn direction(mut self, direction: Option<i32>) -> Self {
-    self.direction = direction;
+  pub fn direction(mut self, direction: i32) -> Self {
+    self.direction = Some(direction);
     self
   }
 
-  pub fn limit(mut self, limit: Option<usize>) -> Self {
-    self.limit = limit;
+  pub fn limit(mut self, limit: usize) -> Self {
+    self.limit = Some(limit);
     self
   }
 
-  pub fn full(mut self, full: Option<bool>) -> Self {
-    self.full = full;
+  pub fn full(mut self, full: bool) -> Self {
+    self.full = Some(full);
     self
   }
 
-  pub fn config(mut self, config: Option<bool>) -> Self {
-    self.config = config;
+  pub fn config(mut self, config: bool) -> Self {
+    self.config = Some(config);
     self
   }
 }
@@ -84,14 +84,14 @@ mod test {
   #[test]
   fn test_serde_req() {
     let req: GetModelsReq = GetModelsReq::default()
-      .search(Some("1"))
-      .author(Some("2"))
-      .filter(Some("3"))
-      .sort(Some("4"))
-      .direction(Some(1))
-      .limit(Some(100))
-      .full(Some(true))
-      .config(Some(true));
+      .search("1")
+      .author("2")
+      .filter("3")
+      .sort("4")
+      .direction(1)
+      .limit(100)
+      .full(true)
+      .config(true);
     let query = serde_urlencoded::to_string(req);
     assert_matches!(query, Ok(v) if v == "search=1&author=2&filter=3&sort=4&direction=1&limit=100&full=true&config=true");
   }

@@ -26,11 +26,10 @@ mod test {
 
   #[test]
   fn test_serde_sibling() {
-    let siblings = Sibling {
-      file_name: String::from("file01"),
-    };
+    let siblings = Sibling::new("file01");
     let json = serde_json::to_string(&siblings);
     assert_matches!(json, Ok(v) if v == "{\"rfilename\":\"file01\"}");
+
 
     let json = "{\"rfilename\":\"file01\"}";
     let sibling = serde_json::from_str::<Sibling>(json);
