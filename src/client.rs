@@ -189,7 +189,6 @@ impl Client {
     if let Some(query) = query {
       req = req.query(query);
     }
-    println!("{:?}", req);
     let res = req
       .send()
       .await
