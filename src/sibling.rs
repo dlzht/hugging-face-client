@@ -30,7 +30,6 @@ mod test {
     let json = serde_json::to_string(&siblings);
     assert_matches!(json, Ok(v) if v == "{\"rfilename\":\"file01\"}");
 
-
     let json = "{\"rfilename\":\"file01\"}";
     let sibling = serde_json::from_str::<Sibling>(json);
     assert_matches!(sibling, Ok(v) if v.file_name() == "file01");

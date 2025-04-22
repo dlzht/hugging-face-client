@@ -10,6 +10,7 @@ use crate::{
   api::{CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes},
   errors::{ReqwestClientSnafu, Result},
 };
+use crate::api::HuggingFaceRes;
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
 
@@ -55,10 +56,7 @@ impl ClientOption {
   /// }
   /// ```
   pub fn endpoint(mut self, endpoint: impl Into<String>) -> Self {
-    let endpoint = endpoint.into()
-      .trim()
-      .trim_end_matches('/')
-      .to_string();
+    let endpoint = endpoint.into().trim().trim_end_matches('/').to_string();
     if endpoint.starts_with("http://") || endpoint.starts_with("https://") {
       self.api_endpoint = Some(endpoint.into());
       return self;
@@ -191,13 +189,15 @@ impl Client {
     if let Some(query) = query {
       req = req.query(query);
     }
+    println!("{:?}", req);
     let res = req
       .send()
       .await
       .context(ReqwestClientSnafu)?
-      .json::<U>()
+      .json::<HuggingFaceRes<U>>()
       .await
-      .context(ReqwestClientSnafu)?;
+      .context(ReqwestClientSnafu)?
+      .unwrap_data()?;
     Ok(res)
   }
 
@@ -214,9 +214,10 @@ impl Client {
       .send()
       .await
       .context(ReqwestClientSnafu)?
-      .json::<U>()
+      .json::<HuggingFaceRes<U>>()
       .await
-      .context(ReqwestClientSnafu)?;
+      .context(ReqwestClientSnafu)?
+      .unwrap_data()?;
     Ok(res)
   }
 }

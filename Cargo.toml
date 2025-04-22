@@ -8,7 +8,7 @@ description = "rust implment of Hugging Face Hub API"
 repository = "https://github.com/dlzht/hugging-face-client"
 
 [dependencies]
-reqwest = { version = "0.12", features = ["json"] }
+reqwest = { version = "0.12", features = ["json", "socks"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = {version = "1.0", features = ["std"]}
 serde_repr = "0.1.20"

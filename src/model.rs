@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 pub struct Model {
   _id: String,
   id: String,
-  model_id: String,
+  model_id: Option<String>,
 
   #[serde(rename = "trendingScore")]
   trending_source: usize,
@@ -12,8 +12,8 @@ pub struct Model {
   private: bool,
   likes: usize,
   downloads: usize,
-  pipeline_tag: String,
-  library_name: String,
+  pipeline_tag: Option<String>,
+  library_name: Option<String>,
 
   #[serde(rename = "createdAt")]
   created_time: String,

@@ -5,6 +5,9 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Debug, Snafu)]
 #[snafu(visibility(pub))]
 pub enum Error {
+  #[snafu(display("Failed to receive response from Hugging Face: {}", message))]
+  HuggingFaceResponse { message: String },
+
   #[snafu(display("Failed to get env variable"))]
   EnvVariable {
     #[snafu(source)]
