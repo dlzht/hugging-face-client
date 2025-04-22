@@ -2,9 +2,9 @@
 
 pub mod api;
 pub mod client;
+pub mod errors;
 
 mod config;
-mod errors;
 mod model;
 mod repo;
 mod sibling;

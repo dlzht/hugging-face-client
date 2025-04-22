@@ -5,6 +5,16 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Debug, Snafu)]
 #[snafu(visibility(pub))]
 pub enum Error {
+  #[snafu(display("Failed to get env variable"))]
+  EnvVariable {
+    #[snafu(source)]
+    source: std::env::VarError,
+    #[snafu(implicit)]
+    location: Location,
+
+    variable: String,
+  },
+
   #[snafu(display("Failed to process http request"))]
   ReqwestClient {
     #[snafu(source)]

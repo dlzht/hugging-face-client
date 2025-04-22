@@ -1,6 +1,8 @@
 //! Async hub client
 
-use reqwest::Client as ReqwestClient;
+use std::time::Duration;
+
+use reqwest::{Client as ReqwestClient, Proxy as ReqwestProxy};
 use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
@@ -11,6 +13,95 @@ use crate::{
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
 
+/// Options for creating [`Client`]
+#[derive(Debug, Clone)]
+pub struct ClientOption {
+  access_token: String,
+  api_endpoint: Option<String>,
+  http_proxy: Option<String>,
+  timeout: Option<Duration>,
+}
+
+impl ClientOption {
+  /// Create [`ClientOption`] instance with access_token
+  ///
+  /// `access_token`: authenticate client to the Hugging Face Hub and allow client to perform
+  /// actions based on token permissions, see [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
+  ///
+  /// ```rust
+  /// use hugging_face_client::client::ClientOption;
+  ///
+  /// fn main() {
+  ///   let option = ClientOption::new("HUGGING_FACE_TOKEN");
+  /// }
+  /// ```
+  pub fn new(access_token: impl Into<String>) -> Self {
+    ClientOption {
+      access_token: access_token.into(),
+      api_endpoint: None,
+      http_proxy: None,
+      timeout: None,
+    }
+  }
+
+  /// Set endpoint, default is `https://huggingface.co`
+  ///
+  /// ```rust
+  /// use hugging_face_client::client::ClientOption;
+  ///
+  /// fn main() {
+  ///   let option = ClientOption::new("HUGGING_FACE_TOKEN")
+  ///     .endpoint("https://fast-proxy.huggingface.to");
+  /// }
+  /// ```
+  pub fn endpoint(mut self, endpoint: impl Into<String>) -> Self {
+    let endpoint = endpoint.into()
+      .trim()
+      .trim_end_matches('/')
+      .to_string();
+    if endpoint.starts_with("http://") || endpoint.starts_with("https://") {
+      self.api_endpoint = Some(endpoint.into());
+      return self;
+    }
+    let mut result = String::with_capacity(endpoint.len() + 8);
+    result.push_str("https://");
+    result.push_str(endpoint.as_str());
+    self.api_endpoint = Some(result);
+    self
+  }
+
+  /// Set proxy, default is `None`
+  ///
+  /// ```rust
+  /// use hugging_face_client::client::ClientOption;
+  ///
+  /// fn main() {
+  ///   let option = ClientOption::new("HUGGING_FACE_TOKEN")
+  ///     .proxy("socks5://127.0.0.1:9000");
+  /// }
+  /// ```
+  pub fn proxy(mut self, proxy: impl Into<String>) -> Self {
+    self.http_proxy = Some(proxy.into());
+    self
+  }
+
+  /// Set timeout in second, default is `None`
+  ///
+  /// ```rust
+  /// use hugging_face_client::client::ClientOption;
+  /// use std::time::Duration;
+  ///
+  /// fn main() {
+  /// let option = ClientOption::new("HUGGING_FACE_TOKEN")
+  ///     .timeout(Duration::from_secs(5));
+  /// }
+  /// ```
+  pub fn timeout(mut self, timeout: Duration) -> Self {
+    self.timeout = Some(timeout);
+    self
+  }
+}
+
 /// Async client for Hugging Face Hub
 #[derive(Debug, Clone)]
 pub struct Client {
@@ -20,40 +111,40 @@ pub struct Client {
 }
 
 impl Client {
-  /// Create Hugging Face Hub client with default api endpoint
+  /// Create [`Client`] instance with [`ClientOption`]
   ///
-  /// `access_token`: authenticate client to the Hugging Face Hub and allow client to perform
-  /// actions based on token permissions, see [https://huggingface.co/settings/tokens](https://huggingface.co/settings/tokens)
   ///
   /// ```rust
   /// use hugging_face_client::client::Client;
+  /// use hugging_face_client::client::ClientOption;
+  /// use std::time::Duration;
+  ///
   /// fn main() {
-  ///   let client = Client::new("hf-Hugging-Face-Access-Token");
+  ///   let option = ClientOption::new("HUGGING_FACE_TOKEN")
+  ///     .timeout(Duration::from_secs(5));
+  ///   let client = Client::new(option);
   /// }
   /// ```
-  pub fn new(access_token: impl Into<String>) -> Self {
-    Client {
-      access_token: access_token.into(),
-      api_endpoint: DEFAULT_API_ENDPOINT.to_string(),
-      http_client: ReqwestClient::new(),
+  pub fn new(option: ClientOption) -> Result<Self> {
+    let mut http_client = ReqwestClient::builder();
+    if let Some(http_proxy) = option.http_proxy {
+      let proxy = ReqwestProxy::all(&http_proxy).context(ReqwestClientSnafu)?;
+      http_client = http_client.proxy(proxy);
     }
+    if let Some(timeout) = option.timeout {
+      http_client = http_client.timeout(timeout);
+    }
+    let http_client = http_client.build().context(ReqwestClientSnafu)?;
+    let client = Client {
+      access_token: option.access_token,
+      api_endpoint: option
+        .api_endpoint
+        .unwrap_or_else(|| DEFAULT_API_ENDPOINT.to_string()),
+      http_client,
+    };
+    Ok(client)
   }
 
-  /// Set the api endpoint, it's useful if you want to access hub thought reverse proxy
-  ///
-  /// `endpoint`: endpoint of Hugging Face Hub api, and final urls will be concatenated in the
-  /// format of `{endpoint}/api/models`
-  ///
-  /// ```rust
-  /// use hugging_face_client::client::Client;
-  /// fn main() {
-  ///   let mut client = Client::new("hf-Hugging-Face-Access-Token");
-  ///   client.endpoint("https://proxy-to-hugging-face.com");
-  /// }
-  /// ```
-  pub fn endpoint(&mut self, endpoint: impl Into<String>) {
-    self.api_endpoint = endpoint.into();
-  }
   /// Endpoint: GET /api/models
   ///
   /// Get information from all models in the Hub
