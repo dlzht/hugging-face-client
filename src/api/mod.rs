@@ -1,4 +1,4 @@
-//! Hugging Face Hub API
+//! Request and response
 //!
 //! Hugging Face has open endpoints that you can use to retrieve information from the Hub as well as perform
 //! certain actions such as creating model, dataset or Space repos.

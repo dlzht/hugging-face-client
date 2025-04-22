@@ -1,3 +1,5 @@
+//! Async hub client
+
 use reqwest::Client as ReqwestClient;
 
 use crate::api::{
@@ -6,7 +8,7 @@ use crate::api::{
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
 
-/// Async client for Hugging Face Hub API
+/// Async client for Hugging Face Hub
 #[derive(Debug, Clone)]
 pub struct Client {
   access_token: String,
