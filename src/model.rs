@@ -7,7 +7,7 @@ pub struct Model {
   model_id: Option<String>,
 
   #[serde(rename = "trendingScore")]
-  trending_source: usize,
+  trending_source: Option<usize>,
 
   private: bool,
   likes: usize,
