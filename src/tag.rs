@@ -1,14 +1,36 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ModelTag {
-  inner: TagInner,
+pub struct Tag {
+  id: String,
+  label: String,
+  tag_type: Option<TagType>,
+  sub_type: Option<String>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-enum TagInner {
-  Defined,
-}
+#[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]
+#[serde(untagged)]
+pub enum TagType {
+  #[serde(rename = "region")]
+  Region,
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq, Hash)]
-enum DefinedTag {}
+  #[serde(rename = "library")]
+  Library,
+
+  #[serde(rename = "license")]
+  License,
+
+  #[serde(rename = "language")]
+  Language,
+
+  #[serde(rename = "dataset")]
+  Dataset,
+
+  #[serde(rename = "pipeline_tag")]
+  Pipeline,
+
+  #[serde(rename = "other")]
+  Other,
+
+  Unknown(String),
+}

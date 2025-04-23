@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-use crate::{model::Model, tag::ModelTag};
+use crate::model::Model;
 
 /// Request of [`crate::client::Client::get_models`]
 #[derive(Debug, Default, Serialize)]

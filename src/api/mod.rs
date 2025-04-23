@@ -19,6 +19,9 @@ pub use create_repo::{CreateRepoReq, CreateRepoRes};
 mod delete_repo;
 pub use delete_repo::DeleteRepoReq;
 
+mod get_tags;
+pub use get_tags::GetTagsRes;
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

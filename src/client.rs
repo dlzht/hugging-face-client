@@ -9,9 +9,10 @@ use snafu::ResultExt;
 use crate::{
   api::{
     CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetModelReq, GetModelRes, GetModelsReq,
-    GetModelsRes, HuggingFaceRes,
+    GetModelsRes, GetTagsRes, HuggingFaceRes,
   },
   errors::{ReqwestClientSnafu, Result},
+  tag::Tag,
 };
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
@@ -150,7 +151,7 @@ impl Client {
   /// Get information from all models in the Hub
   pub async fn get_models(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
     let url = format!("{}/api/models", &self.api_endpoint);
-    self.get_request(&url, Some(&req)).await
+    self.get_request(&url, Some(&req), true).await
   }
 
   /// Endpoint: GET /api/models/{repo_id}
@@ -168,7 +169,16 @@ impl Client {
       format!("{}/api/models/{}", &self.api_endpoint, req.name)
     };
     let req = if true { None } else { Some(&req) };
-    self.get_request(&url, req).await
+    self.get_request(&url, req, true).await
+  }
+
+  /// Endpoint: GET /api/models-tags-by-type
+  ///
+  /// Gets all the available model tags hosted in the Hub
+  pub async fn get_tags(&self) -> Result<GetTagsRes> {
+    let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
+    let req = if true { None } else { Some(&()) };
+    self.get_request(&url, req, false).await
   }
 
   /// Endpoint:  POST /api/repos/create
@@ -195,8 +205,12 @@ impl Client {
     &self,
     url: &str,
     query: Option<&T>,
+    need_token: bool,
   ) -> Result<U> {
-    let mut req = self.http_client.get(url).bearer_auth(&self.access_token);
+    let mut req = self.http_client.get(url);
+    if need_token {
+      req = req.bearer_auth(&self.access_token);
+    }
     if let Some(query) = query {
       req = req.query(query);
     }
