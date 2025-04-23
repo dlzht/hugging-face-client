@@ -2,10 +2,10 @@ use serde::Serialize;
 
 use crate::{api::SearchReq, model::Model};
 
-/// Request of [`crate::client::Client::get_models`]
+/// Request of [`crate::client::Client::search_model`]
 pub type GetModelsReq<'a> = SearchReq<'a>;
 
-/// Response of [`crate::client::Client::get_models`]
+/// Response of [`crate::client::Client::search_model`]
 pub type GetModelsRes = Vec<Model>;
 
 #[cfg(test)]

@@ -149,7 +149,7 @@ impl Client {
   /// Get information from all models in the Hub
   ///
   /// Endpoint: `GET /api/models`
-  pub async fn get_models(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
+  pub async fn search_model(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
     let url = format!("{}/api/models", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }
@@ -184,7 +184,7 @@ impl Client {
   /// Get information from all datasets in the Hub
   ///
   /// Endpoint: ` GET /api/datasets`
-  pub async fn get_datasets(&self, req: GetDatasetsReq<'_>) -> Result<GetDatasetsRes> {
+  pub async fn search_dataset(&self, req: GetDatasetsReq<'_>) -> Result<GetDatasetsRes> {
     let url = format!("{}/api/datasets", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }

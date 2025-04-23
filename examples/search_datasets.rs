@@ -13,7 +13,7 @@ async fn main() -> Result<()> {
 
   // get datasets
   let req = GetDatasetsReq::default().search("awesome-chatgpt-prompts");
-  let res = client.get_datasets(req).await?;
+  let res = client.search_dataset(req).await?;
   println!("Get Models: {:#?}", res);
   Ok(())
 }

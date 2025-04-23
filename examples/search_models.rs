@@ -13,7 +13,7 @@ async fn main() -> Result<()> {
 
   // get models
   let get_models_req = GetModelsReq::default().search("DeepSeek-R1-LOGOSMASTER-HEIDEGGER");
-  let res = client.get_models(get_models_req).await?;
+  let res = client.search_model(get_models_req).await?;
   println!("Get Models: {:#?}", res);
   Ok(())
 }

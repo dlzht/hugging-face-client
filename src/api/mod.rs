@@ -7,8 +7,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::errors::{HuggingFaceResponseSnafu, PlainMessageSnafu, Result};
 
-mod get_models;
-pub use get_models::{GetModelsReq, GetModelsRes};
+mod search_models;
+pub use search_models::{GetModelsReq, GetModelsRes};
 
 mod get_model;
 pub use get_model::{GetModelReq, GetModelRes};
@@ -22,8 +22,8 @@ pub use delete_repo::DeleteRepoReq;
 mod get_tags;
 pub use get_tags::GetTagsRes;
 
-mod get_datasets;
-pub use get_datasets::{GetDatasetsReq, GetDatasetsRes};
+mod search_datasets;
+pub use search_datasets::{GetDatasetsReq, GetDatasetsRes};
 
 mod get_dataset;
 pub use get_dataset::{GetDatasetReq, GetDatasetRes};
