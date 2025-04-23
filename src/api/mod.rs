@@ -5,7 +5,7 @@
 
 use serde::{Deserialize, Serialize};
 
-use crate::errors::{HuggingFaceResponseSnafu, PlainMessageSnafu, Result};
+use crate::errors::{HuggingFaceResponseSnafu, Result};
 
 mod search_models;
 pub use search_models::{GetModelsReq, GetModelsRes};

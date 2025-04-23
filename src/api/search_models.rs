@@ -1,5 +1,3 @@
-use serde::Serialize;
-
 use crate::{api::SearchReq, model::Model};
 
 /// Request of [`crate::client::Client::search_model`]

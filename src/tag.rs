@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub(crate) struct Tag {
+pub struct Tag {
   id: String,
   label: String,
   tag_type: Option<TagType>,

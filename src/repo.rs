@@ -1,7 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-pub struct Repository {}
-
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum RepoType {
   #[serde(rename = "dataset")]
