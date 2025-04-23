@@ -8,8 +8,9 @@ use snafu::ResultExt;
 
 use crate::{
   api::{
-    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetsReq, GetDatasetsRes, GetModelReq,
-    GetModelRes, GetModelsReq, GetModelsRes, GetTagsRes, HuggingFaceRes,
+    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetsReq,
+    GetDatasetsRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes, GetTagsRes,
+    HuggingFaceRes,
   },
   errors::{ReqwestClientSnafu, Result},
 };
@@ -162,10 +163,10 @@ impl Client {
     let url = if let Some(revision) = req.revision {
       format!(
         "{}/api/models/{}/revision/{}",
-        &self.api_endpoint, req.name, revision
+        &self.api_endpoint, req.repo_name, revision
       )
     } else {
-      format!("{}/api/models/{}", &self.api_endpoint, req.name)
+      format!("{}/api/models/{}", &self.api_endpoint, req.repo_name)
     };
     let req = if true { None } else { Some(&req) };
     self.get_request(&url, req, true).await
@@ -186,6 +187,24 @@ impl Client {
   pub async fn get_datasets(&self, req: GetDatasetsReq<'_>) -> Result<GetDatasetsRes> {
     let url = format!("{}/api/datasets", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
+  }
+
+  /// Get all information for a specific model
+  ///
+  /// Endpoint: `GET /api/datasets/{repo_id}` or
+  ///
+  /// Endpoint: `GET /api/datasets/{repo_id}/revision/{revision}`
+  pub async fn get_dataset(&self, req: GetDatasetReq<'_>) -> Result<GetDatasetRes> {
+    let url = if let Some(revision) = req.revision {
+      format!(
+        "{}/api/datasets/{}/revision/{}",
+        &self.api_endpoint, req.repo_name, revision
+      )
+    } else {
+      format!("{}/api/datasets/{}", &self.api_endpoint, req.repo_name)
+    };
+    let req = if true { None } else { Some(&req) };
+    self.get_request(&url, req, true).await
   }
 
   /// Create a repository, model repo by default.

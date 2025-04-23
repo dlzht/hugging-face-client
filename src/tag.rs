@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Tag {
+pub(crate) struct Tag {
   id: String,
   label: String,
   tag_type: Option<TagType>,
@@ -34,3 +34,6 @@ pub enum TagType {
 
   Unknown(String),
 }
+
+pub type ModelTag = Tag;
+pub type DatasetTag = Tag;

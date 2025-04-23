@@ -1,10 +1,10 @@
 use serde::Serialize;
 
-use crate::model::Model;
+use crate::dataset::Dataset;
 
-/// Request of [`crate::client::Client::get_model`]
+/// Request of [`crate::client::Client::get_dataset`]
 #[derive(Debug, Serialize)]
-pub struct GetModelReq<'a> {
+pub struct GetDatasetReq<'a> {
   #[serde(rename = "repo_id")]
   pub(crate) repo_name: &'a str,
 
@@ -12,9 +12,9 @@ pub struct GetModelReq<'a> {
   pub(crate) revision: Option<&'a str>,
 }
 
-impl<'a> GetModelReq<'a> {
-  pub fn new(repo_name: &str) -> GetModelReq<'_> {
-    GetModelReq {
+impl<'a> GetDatasetReq<'a> {
+  pub fn new(repo_name: &str) -> GetDatasetReq<'_> {
+    GetDatasetReq {
       repo_name,
       revision: None,
     }
@@ -26,5 +26,5 @@ impl<'a> GetModelReq<'a> {
   }
 }
 
-/// Response of [`crate::client::Client::get_model`]
-pub type GetModelRes = Model;
+/// Response of [`crate::client::Client::get_dataset`]
+pub type GetDatasetRes = Dataset;

@@ -25,6 +25,9 @@ pub use get_tags::GetTagsRes;
 mod get_datasets;
 pub use get_datasets::{GetDatasetsReq, GetDatasetsRes};
 
+mod get_dataset;
+pub use get_dataset::{GetDatasetReq, GetDatasetRes};
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]
