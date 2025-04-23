@@ -2,14 +2,14 @@
 
 use std::time::Duration;
 
-use reqwest::{Client as ReqwestClient, Proxy as ReqwestProxy};
+use reqwest::{Client as ReqwestClient, Method, Proxy as ReqwestProxy};
 use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
 use crate::{
   api::{
-    CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes,
-    HuggingFaceRes,
+    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetModelReq, GetModelRes, GetModelsReq,
+    GetModelsRes, HuggingFaceRes,
   },
   errors::{ReqwestClientSnafu, Result},
 };
@@ -176,7 +176,16 @@ impl Client {
   /// Create a repository, model repo by default.
   pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
     let url = format!("{}/api/repos/create", &self.api_endpoint);
-    self.post_request(&url, Some(&req)).await
+    self.exec_request(&url, Method::POST, Some(&req)).await
+  }
+
+  /// Endpoint: DELETE /api/repos/delete
+  ///
+  pub async fn delete_repo(&self, req: DeleteRepoReq<'_>) -> Result<()> {
+    let url = format!("{}/api/repos/delete", &self.api_endpoint);
+    self
+      .exec_request_without_response(&url, Method::DELETE, Some(&req))
+      .await
   }
 }
 
@@ -202,12 +211,16 @@ impl Client {
     Ok(res)
   }
 
-  async fn post_request<T: Serialize, U: for<'de> Deserialize<'de>>(
+  async fn exec_request<T: Serialize, U: for<'de> Deserialize<'de>>(
     &self,
     url: &str,
+    method: Method,
     body: Option<&T>,
   ) -> Result<U> {
-    let mut req = self.http_client.post(url).bearer_auth(&self.access_token);
+    let mut req = self
+      .http_client
+      .request(method, url)
+      .bearer_auth(&self.access_token);
     if let Some(body) = body {
       req = req.json(body);
     }
@@ -220,5 +233,27 @@ impl Client {
       .context(ReqwestClientSnafu)?
       .unwrap_data()?;
     Ok(res)
+  }
+
+  async fn exec_request_without_response<T: Serialize>(
+    &self,
+    url: &str,
+    method: Method,
+    body: Option<&T>,
+  ) -> Result<()> {
+    let mut req = self
+      .http_client
+      .request(method, url)
+      .bearer_auth(&self.access_token);
+    if let Some(body) = body {
+      req = req.json(body);
+    }
+    let res = req
+      .send()
+      .await
+      .context(ReqwestClientSnafu)?
+      .error_for_status()
+      .context(ReqwestClientSnafu)?;
+    Ok(())
   }
 }
