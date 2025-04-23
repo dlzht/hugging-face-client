@@ -1,4 +1,10 @@
-## Example
+[![Crates.io](https://img.shields.io/crates/v/hugging-face-client)](https://crates.io/crates/hugging-face-client)
+[![Docs.rs](https://img.shields.io/docsrs/hugging-face-client)](https://docs.rs/hugging-face-client)
+[![License](https://img.shields.io/github/license/dlzht/hugging-face-client.svg)](https://img.shields.io/github/license/用户名/仓库名.svg)
+
+```toml
+hugging-face-client = "0.2"
+```
 
 ### Create Client
 
