@@ -1,7 +1,9 @@
-use hugging_face_client::api::CreateRepoReq;
-use hugging_face_client::client::{Client, ClientOption};
-use hugging_face_client::errors::Result;
-use hugging_face_client::RepoType;
+use hugging_face_client::{
+  RepoType,
+  api::CreateRepoReq,
+  client::{Client, ClientOption},
+  errors::Result,
+};
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<()> {

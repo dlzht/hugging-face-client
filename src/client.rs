@@ -7,10 +7,12 @@ use serde::{Deserialize, Serialize};
 use snafu::ResultExt;
 
 use crate::{
-  api::{CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes},
+  api::{
+    CreateRepoReq, CreateRepoRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes,
+    HuggingFaceRes,
+  },
   errors::{ReqwestClientSnafu, Result},
 };
-use crate::api::HuggingFaceRes;
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
 
@@ -160,10 +162,10 @@ impl Client {
     let url = if let Some(revision) = req.revision {
       format!(
         "{}/api/models/{}/revision/{}",
-        &self.api_endpoint, req.repo_id, revision
+        &self.api_endpoint, req.name, revision
       )
     } else {
-      format!("{}/api/models/{}", &self.api_endpoint, req.repo_id)
+      format!("{}/api/models/{}", &self.api_endpoint, req.name)
     };
     let req = if true { None } else { Some(&req) };
     self.get_request(&url, req).await

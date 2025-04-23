@@ -2,8 +2,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Model {
-  _id: String,
+  #[serde(rename = "_id")]
   id: String,
+
+  #[serde(rename = "id")]
+  name: String,
   model_id: Option<String>,
 
   #[serde(rename = "trendingScore")]

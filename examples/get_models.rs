@@ -1,6 +1,8 @@
-use hugging_face_client::api::GetModelsReq;
-use hugging_face_client::client::{Client, ClientOption};
-use hugging_face_client::errors::Result;
+use hugging_face_client::{
+  api::GetModelsReq,
+  client::{Client, ClientOption},
+  errors::Result,
+};
 
 #[tokio::main(flavor = "current_thread")]
 async fn main() -> Result<()> {

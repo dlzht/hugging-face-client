@@ -46,7 +46,6 @@ pub struct FailureRes {
 }
 
 impl FailureRes {
-
   /// Get error message
   pub fn error(&self) -> &str {
     &self.error
