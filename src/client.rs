@@ -8,8 +8,8 @@ use snafu::ResultExt;
 
 use crate::{
   api::{
-    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetModelReq, GetModelRes, GetModelsReq,
-    GetModelsRes, GetTagsRes, HuggingFaceRes,
+    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetsReq, GetDatasetsRes, GetModelReq,
+    GetModelRes, GetModelsReq, GetModelsRes, GetTagsRes, HuggingFaceRes,
   },
   errors::{ReqwestClientSnafu, Result},
 };
@@ -178,6 +178,14 @@ impl Client {
     let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
+  }
+
+  /// Get information from all datasets in the Hub
+  ///
+  /// Endpoint: ` GET /api/datasets`
+  pub async fn get_datasets(&self, req: GetDatasetsReq<'_>) -> Result<GetDatasetsRes> {
+    let url = format!("{}/api/datasets", &self.api_endpoint);
+    self.get_request(&url, Some(&req), true).await
   }
 
   /// Create a repository, model repo by default.

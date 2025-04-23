@@ -1,76 +1,9 @@
 use serde::Serialize;
 
-use crate::model::Model;
+use crate::{api::SearchReq, model::Model};
 
 /// Request of [`crate::client::Client::get_models`]
-#[derive(Debug, Default, Serialize)]
-pub struct GetModelsReq<'a> {
-  #[serde(skip_serializing_if = "Option::is_none")]
-  search: Option<&'a str>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  author: Option<&'a str>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  filter: Option<&'a str>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  sort: Option<&'a str>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  direction: Option<i32>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  limit: Option<usize>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  full: Option<bool>,
-
-  #[serde(skip_serializing_if = "Option::is_none")]
-  config: Option<bool>,
-}
-
-impl<'a> GetModelsReq<'a> {
-  pub fn search(mut self, search: &'a str) -> Self {
-    self.search = Some(search);
-    self
-  }
-
-  pub fn author(mut self, author: &'a str) -> Self {
-    self.author = Some(author);
-    self
-  }
-
-  pub fn filter(mut self, filter: &'a str) -> Self {
-    self.filter = Some(filter);
-    self
-  }
-
-  pub fn sort(mut self, sort: &'a str) -> Self {
-    self.sort = Some(sort);
-    self
-  }
-
-  pub fn direction(mut self, direction: i32) -> Self {
-    self.direction = Some(direction);
-    self
-  }
-
-  pub fn limit(mut self, limit: usize) -> Self {
-    self.limit = Some(limit);
-    self
-  }
-
-  pub fn full(mut self, full: bool) -> Self {
-    self.full = Some(full);
-    self
-  }
-
-  pub fn config(mut self, config: bool) -> Self {
-    self.config = Some(config);
-    self
-  }
-}
+pub type GetModelsReq<'a> = SearchReq<'a>;
 
 /// Response of [`crate::client::Client::get_models`]
 pub type GetModelsRes = Vec<Model>;

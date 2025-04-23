@@ -42,6 +42,7 @@ pub mod client;
 pub mod errors;
 
 mod config;
+mod dataset;
 mod model;
 mod repo;
 mod sibling;
