@@ -2,8 +2,9 @@ use serde::Deserialize;
 
 use crate::tag::ModelTag;
 
+/// Response of [`crate::client::Client::get_dataset_tags`]
 #[derive(Debug, Deserialize)]
-pub struct GetTagsRes {
+pub struct GetDatasetTagRes {
   region: Vec<ModelTag>,
   library: Vec<ModelTag>,
   license: Vec<ModelTag>,
@@ -16,7 +17,7 @@ pub struct GetTagsRes {
   other: Vec<ModelTag>,
 }
 
-impl GetTagsRes {
+impl GetDatasetTagRes {
   pub fn region(&self) -> &[ModelTag] {
     &self.region
   }

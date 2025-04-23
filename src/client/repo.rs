@@ -2,17 +2,19 @@ use reqwest::Method;
 
 use crate::{
   api::{
-    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetsReq,
-    GetDatasetsRes, GetModelReq, GetModelRes, GetModelsReq, GetModelsRes, GetTagsRes,
+    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
+    GetDatasetsReq, GetDatasetsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetModelsReq,
+    GetModelsRes,
   },
   client::Client,
+  errors::Result,
 };
 
 impl Client {
   /// Get information from all models in the Hub
   ///
   /// Endpoint: `GET /api/models`
-  pub async fn search_model(&self, req: GetModelsReq<'_>) -> crate::errors::Result<GetModelsRes> {
+  pub async fn search_model(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
     let url = format!("{}/api/models", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }
@@ -22,7 +24,7 @@ impl Client {
   /// Endpoint: `GET /api/models/{repo_id}` or
   ///
   /// Endpoint: `GET /api/models/{repo_id}/revision/{revision}`
-  pub async fn get_model(&self, req: GetModelReq<'_>) -> crate::errors::Result<GetModelRes> {
+  pub async fn get_model(&self, req: GetModelReq<'_>) -> Result<GetModelRes> {
     let url = if let Some(revision) = req.revision {
       format!(
         "{}/api/models/{}/revision/{}",
@@ -38,7 +40,7 @@ impl Client {
   /// Gets all the available model tags hosted in the Hub
   ///
   /// Endpoint: `GET /api/models-tags-by-type`
-  pub async fn get_tags(&self) -> crate::errors::Result<GetTagsRes> {
+  pub async fn get_model_tags(&self) -> Result<GetModelTagsRes> {
     let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
@@ -47,10 +49,7 @@ impl Client {
   /// Get information from all datasets in the Hub
   ///
   /// Endpoint: ` GET /api/datasets`
-  pub async fn search_dataset(
-    &self,
-    req: GetDatasetsReq<'_>,
-  ) -> crate::errors::Result<GetDatasetsRes> {
+  pub async fn search_dataset(&self, req: GetDatasetsReq<'_>) -> Result<GetDatasetsRes> {
     let url = format!("{}/api/datasets", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }
@@ -60,7 +59,7 @@ impl Client {
   /// Endpoint: `GET /api/datasets/{repo_id}` or
   ///
   /// Endpoint: `GET /api/datasets/{repo_id}/revision/{revision}`
-  pub async fn get_dataset(&self, req: GetDatasetReq<'_>) -> crate::errors::Result<GetDatasetRes> {
+  pub async fn get_dataset(&self, req: GetDatasetReq<'_>) -> Result<GetDatasetRes> {
     let url = if let Some(revision) = req.revision {
       format!(
         "{}/api/datasets/{}/revision/{}",
@@ -73,10 +72,19 @@ impl Client {
     self.get_request(&url, req, true).await
   }
 
+  /// Gets all the available dataset tags hosted in the Hub.
+  ///
+  /// Endpoint: `GET /api/datasets-tags-by-type`
+  pub async fn get_dataset_tags(&self) -> Result<GetDatasetTagRes> {
+    let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
+    let req = if true { None } else { Some(&()) };
+    self.get_request(&url, req, false).await
+  }
+
   /// Create a repository, model repo by default.
   ///
   /// Endpoint:  POST /api/repos/create
-  pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> crate::errors::Result<CreateRepoRes> {
+  pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
     let url = format!("{}/api/repos/create", &self.api_endpoint);
     self.exec_request(&url, Method::POST, Some(&req)).await
   }
@@ -85,7 +93,7 @@ impl Client {
   ///
   /// Endpoint: `DELETE /api/repos/delete`
   ///
-  pub async fn delete_repo(&self, req: DeleteRepoReq<'_>) -> crate::errors::Result<()> {
+  pub async fn delete_repo(&self, req: DeleteRepoReq<'_>) -> Result<()> {
     let url = format!("{}/api/repos/delete", &self.api_endpoint);
     self
       .exec_request_without_response(&url, Method::DELETE, Some(&req))

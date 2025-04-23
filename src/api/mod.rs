@@ -19,14 +19,17 @@ pub use create_repo::{CreateRepoReq, CreateRepoRes};
 mod delete_repo;
 pub use delete_repo::DeleteRepoReq;
 
-mod get_tags;
-pub use get_tags::GetTagsRes;
+mod get_model_tags;
+pub use get_model_tags::GetModelTagsRes;
 
 mod search_datasets;
 pub use search_datasets::{GetDatasetsReq, GetDatasetsRes};
 
 mod get_dataset;
 pub use get_dataset::{GetDatasetReq, GetDatasetRes};
+
+mod get_dataset_tags;
+pub use get_dataset_tags::GetDatasetTagRes;
 
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]

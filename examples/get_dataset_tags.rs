@@ -11,7 +11,7 @@ async fn main() -> Result<()> {
   let client = Client::new(option)?;
 
   // get tags
-  let res = client.get_tags().await?;
+  let res = client.get_dataset_tags().await?;
   println!("Get Tags: {:#?}", res);
   Ok(())
 }
