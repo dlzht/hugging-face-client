@@ -12,7 +12,6 @@ use crate::{
     GetModelsRes, GetTagsRes, HuggingFaceRes,
   },
   errors::{ReqwestClientSnafu, Result},
-  tag::Tag,
 };
 
 const DEFAULT_API_ENDPOINT: &'static str = "https://huggingface.co";
@@ -146,19 +145,19 @@ impl Client {
     Ok(client)
   }
 
-  /// Endpoint: GET /api/models
-  ///
   /// Get information from all models in the Hub
+  ///
+  /// Endpoint: `GET /api/models`
   pub async fn get_models(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
     let url = format!("{}/api/models", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }
 
-  /// Endpoint: GET /api/models/{repo_id}
-  ///
-  /// Endpoint: GET /api/models/{repo_id}/revision/{revision}
-  ///
   /// Get all information for a specific model
+  ///
+  /// Endpoint: `GET /api/models/{repo_id}` or
+  ///
+  /// Endpoint: `GET /api/models/{repo_id}/revision/{revision}`
   pub async fn get_model(&self, req: GetModelReq<'_>) -> Result<GetModelRes> {
     let url = if let Some(revision) = req.revision {
       format!(
@@ -172,24 +171,26 @@ impl Client {
     self.get_request(&url, req, true).await
   }
 
-  /// Endpoint: GET /api/models-tags-by-type
-  ///
   /// Gets all the available model tags hosted in the Hub
+  ///
+  /// Endpoint: `GET /api/models-tags-by-type`
   pub async fn get_tags(&self) -> Result<GetTagsRes> {
     let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
   }
 
-  /// Endpoint:  POST /api/repos/create
-  ///
   /// Create a repository, model repo by default.
+  ///
+  /// Endpoint:  POST /api/repos/create
   pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
     let url = format!("{}/api/repos/create", &self.api_endpoint);
     self.exec_request(&url, Method::POST, Some(&req)).await
   }
 
-  /// Endpoint: DELETE /api/repos/delete
+  /// Delete a repository, model repo by default
+  ///
+  /// Endpoint: `DELETE /api/repos/delete`
   ///
   pub async fn delete_repo(&self, req: DeleteRepoReq<'_>) -> Result<()> {
     let url = format!("{}/api/repos/delete", &self.api_endpoint);
