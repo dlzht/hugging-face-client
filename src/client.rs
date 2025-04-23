@@ -248,7 +248,7 @@ impl Client {
     if let Some(body) = body {
       req = req.json(body);
     }
-    let res = req
+    let _res = req
       .send()
       .await
       .context(ReqwestClientSnafu)?

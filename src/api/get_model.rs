@@ -8,6 +8,7 @@ pub struct GetModelReq<'a> {
   #[serde(rename = "repo_id")]
   pub(crate) name: &'a str,
 
+  #[serde(skip_serializing_if = "Option::is_none")]
   pub(crate) revision: Option<&'a str>,
 }
 
