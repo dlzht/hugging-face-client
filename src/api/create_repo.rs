@@ -10,10 +10,12 @@ pub struct CreateRepoReq<'a> {
   #[serde(rename = "type")]
   repo_type: RepoType,
 
+  #[serde(skip_serializing_if = "Option::is_none")]
   organization: Option<&'a str>,
 
   private: bool,
 
+  #[serde(skip_serializing_if = "Option::is_none")]
   sdk: Option<SpaceSdkType>,
 }
 
@@ -44,7 +46,9 @@ impl<'a> CreateRepoReq<'a> {
   }
 
   pub fn sdk(mut self, sdk_type: SpaceSdkType) -> Self {
-    self.sdk = Some(sdk_type);
+    if matches!(self.repo_type, RepoType::Dataset) {
+      self.sdk = Some(sdk_type);
+    }
     self
   }
 }
@@ -53,13 +57,15 @@ impl<'a> CreateRepoReq<'a> {
 #[derive(Debug, Deserialize)]
 pub struct CreateRepoRes {
   id: String,
+
   name: String,
+
   url: String,
 }
 
 impl CreateRepoRes {
   pub fn id(&self) -> &str {
-    &self.id
+    &self.name
   }
 
   pub fn name(&self) -> &str {

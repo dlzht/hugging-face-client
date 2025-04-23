@@ -173,7 +173,7 @@ impl Client {
   ///
   /// Create a repository, model repo by default.
   pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
-    let url = format!("{}/api/repo/create", &self.api_endpoint);
+    let url = format!("{}/api/repos/create", &self.api_endpoint);
     self.post_request(&url, Some(&req)).await
   }
 }

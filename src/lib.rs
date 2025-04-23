@@ -48,3 +48,5 @@ mod sibling;
 mod sort;
 mod space;
 mod tag;
+
+pub use repo::RepoType;
