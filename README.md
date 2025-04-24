@@ -5,7 +5,7 @@
 ## Cargo.toml
 
 ```toml
-hugging-face-client = "0.2"
+hugging-face-client = "0.3"
 ```
 
 ## Example
