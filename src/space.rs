@@ -1,6 +1,51 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
+use crate::{dataset::DatasetCardData, sibling::Sibling};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Space {
+  #[serde(rename = "_id")]
+  id: String,
+
+  #[serde(rename = "id")]
+  name: String,
+
+  #[serde(rename = "trendingScore")]
+  trending_source: Option<usize>,
+
+  private: bool,
+  likes: usize,
+
+  #[serde(rename = "createdAt")]
+  created_time: String,
+  tags: Vec<String>,
+
+  sdk: Option<SpaceSdkType>,
+
+  sha: Option<String>,
+
+  subdomain: Option<String>,
+
+  #[serde(rename = "lastModified")]
+  last_modified: Option<String>,
+
+  siblings: Option<Vec<Sibling>>,
+
+  #[serde(rename = "cardData")]
+  card_data: Option<DatasetCardData>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SpaceCardData {
+  title: Option<String>,
+  emoji: Option<String>,
+  sdk_version: Option<String>,
+  app_file: Option<String>,
+  license: Option<String>,
+  short_description: Option<String>,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum SpaceSdkType {
   #[serde(rename = "streamlit")]
   StreamLit,
@@ -13,6 +58,8 @@ pub enum SpaceSdkType {
 
   #[serde(rename = "static")]
   Static,
+
+  Unknown(String),
 }
 
 impl Default for SpaceSdkType {

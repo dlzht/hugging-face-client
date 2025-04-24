@@ -4,7 +4,7 @@ use crate::{
   api::{
     CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
     GetDatasetsReq, GetDatasetsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetModelsReq,
-    GetModelsRes,
+    GetModelsRes, GetSpaceReq, GetSpaceRes, GetSpacesReq, GetSpacesRes,
   },
   client::Client,
   errors::Result,
@@ -54,7 +54,7 @@ impl Client {
     self.get_request(&url, Some(&req), true).await
   }
 
-  /// Get all information for a specific model
+  /// Get all information for a specific dataset
   ///
   /// Endpoint: `GET /api/datasets/{repo_id}` or
   ///
@@ -79,6 +79,32 @@ impl Client {
     let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
+  }
+
+  /// Get information from all spaces in the Hub
+  ///
+  /// Endpoint: ` GET /api/spaces`
+  pub async fn search_space(&self, req: GetSpacesReq<'_>) -> Result<GetSpacesRes> {
+    let url = format!("{}/api/spaces", &self.api_endpoint);
+    self.get_request(&url, Some(&req), true).await
+  }
+
+  /// Get all information for a specific space
+  ///
+  /// Endpoint: `GET /api/spaces/{repo_id}` or
+  ///
+  /// Endpoint: `GET /api/spaces/{repo_id}/revision/{revision}`
+  pub async fn get_space(&self, req: GetSpaceReq<'_>) -> Result<GetSpaceRes> {
+    let url = if let Some(revision) = req.revision {
+      format!(
+        "{}/api/spaces/{}/revision/{}",
+        &self.api_endpoint, req.repo_name, revision
+      )
+    } else {
+      format!("{}/api/spaces/{}", &self.api_endpoint, req.repo_name)
+    };
+    let req = if true { None } else { Some(&req) };
+    self.get_request(&url, req, true).await
   }
 
   /// Create a repository, model repo by default.

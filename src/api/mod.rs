@@ -31,6 +31,12 @@ pub use get_dataset::{GetDatasetReq, GetDatasetRes};
 mod get_dataset_tags;
 pub use get_dataset_tags::GetDatasetTagRes;
 
+mod get_space;
+pub use get_space::{GetSpaceReq, GetSpaceRes};
+
+mod search_spaces;
+pub use search_spaces::{GetSpacesReq, GetSpacesRes};
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

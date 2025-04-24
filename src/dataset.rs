@@ -37,11 +37,11 @@ pub struct Dataset {
   key: Option<String>,
 
   #[serde(rename = "cardData")]
-  card_data: Option<CardData>,
+  card_data: Option<DatasetCardData>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct CardData {
+pub struct DatasetCardData {
   license: Option<String>,
   tags: Option<Vec<String>>,
   task_categories: Option<Vec<String>>,
