@@ -72,7 +72,7 @@ impl CreateRepoRes {
     &self.name
   }
 
-  pub fn url(&self) -> &str {
+ pub fn url(&self) -> &str {
     &self.url
   }
 }
@@ -93,7 +93,7 @@ mod test {
       .repo_type(RepoType::Model)
       .private(true);
     let json = serde_json::to_string(&req);
-    assert_matches!(json, Ok(v) if v == "{\"name\":\"my-repo\",\"type\":\"model\",\"organization\":\"my-org\",\"private\":true,\"sdk\":null}");
+    assert_matches!(json, Ok(v) if v == "{\"name\":\"my-repo\",\"type\":\"model\",\"organization\":\"my-org\",\"private\":true}");
   }
 
   #[test]

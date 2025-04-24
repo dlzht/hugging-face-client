@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::GetDatasetsReq,
+  api::SearchModelReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -11,9 +11,10 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // get datasets
-  let req = GetDatasetsReq::default().search("awesome-chatgpt-prompts");
-  let res = client.search_dataset(req).await?;
+  // get models
+  let req = SearchModelReq::default().search("DeepSeek-R1-LOGOSMASTER-HEIDEGGER")
+    .full(true);
+  let res = client.search_model(req).await?;
   println!("Get Models: {:#?}", res);
   Ok(())
 }

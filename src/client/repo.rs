@@ -3,8 +3,8 @@ use reqwest::Method;
 use crate::{
   api::{
     CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
-    GetDatasetsReq, GetDatasetsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetModelsReq,
-    GetModelsRes, GetSpaceReq, GetSpaceRes, GetSpacesReq, GetSpacesRes,
+    SearchDatasetReq, SearchDatasetRes, GetModelReq, GetModelRes, GetModelTagsRes, SearchModelReq,
+    SearchModelRes, GetSpaceReq, GetSpaceRes, SearchSpaceReq, SearchSpaceRes,
   },
   client::Client,
   errors::Result,
@@ -14,7 +14,7 @@ impl Client {
   /// Get information from all models in the Hub
   ///
   /// Endpoint: `GET /api/models`
-  pub async fn search_model(&self, req: GetModelsReq<'_>) -> Result<GetModelsRes> {
+  pub async fn search_model(&self, req: SearchModelReq<'_>) -> Result<SearchModelRes> {
     let url = format!("{}/api/models", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }
@@ -49,7 +49,7 @@ impl Client {
   /// Get information from all datasets in the Hub
   ///
   /// Endpoint: ` GET /api/datasets`
-  pub async fn search_dataset(&self, req: GetDatasetsReq<'_>) -> Result<GetDatasetsRes> {
+  pub async fn search_dataset(&self, req: SearchDatasetReq<'_>) -> Result<SearchDatasetRes> {
     let url = format!("{}/api/datasets", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }
@@ -84,7 +84,7 @@ impl Client {
   /// Get information from all spaces in the Hub
   ///
   /// Endpoint: ` GET /api/spaces`
-  pub async fn search_space(&self, req: GetSpacesReq<'_>) -> Result<GetSpacesRes> {
+  pub async fn search_space(&self, req: SearchSpaceReq<'_>) -> Result<SearchSpaceRes> {
     let url = format!("{}/api/spaces", &self.api_endpoint);
     self.get_request(&url, Some(&req), true).await
   }

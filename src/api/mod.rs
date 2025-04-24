@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 use crate::errors::{HuggingFaceResponseSnafu, Result};
 
 mod search_models;
-pub use search_models::{GetModelsReq, GetModelsRes};
+pub use search_models::{SearchModelReq, SearchModelRes};
 
 mod get_model;
 pub use get_model::{GetModelReq, GetModelRes};
@@ -23,7 +23,7 @@ mod get_model_tags;
 pub use get_model_tags::GetModelTagsRes;
 
 mod search_datasets;
-pub use search_datasets::{GetDatasetsReq, GetDatasetsRes};
+pub use search_datasets::{SearchDatasetReq, SearchDatasetRes};
 
 mod get_dataset;
 pub use get_dataset::{GetDatasetReq, GetDatasetRes};
@@ -35,7 +35,7 @@ mod get_space;
 pub use get_space::{GetSpaceReq, GetSpaceRes};
 
 mod search_spaces;
-pub use search_spaces::{GetSpacesReq, GetSpacesRes};
+pub use search_spaces::{SearchSpaceReq, SearchSpaceRes};
 
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]

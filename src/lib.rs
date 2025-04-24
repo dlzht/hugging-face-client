@@ -26,10 +26,9 @@
 //!   let client = Client::new(option).unwrap();
 //!
 //!   // get model
-//!   let get_model_req = GetModelReq::new("microsoft/bitnet-b1.58-2B-4T");
-//!   let res = client.get_model(get_model_req).await?;
+//!   let req = GetModelReq::new("microsoft/bitnet-b1.58-2B-4T");
+//!   let res = client.get_model(req).await.unwrap();
 //!   println!("{:#?}", res);
-//!   Ok(())
 //! }
 //! // Model { _id: "67fddfa9a7fe1f21ec1d3026", id: "microsoft/bitnet-b1.58-2B-4T", model_id: None ... }
 //! ```

@@ -1,20 +1,20 @@
 use crate::{api::SearchReq, model::Model};
 
 /// Request of [`crate::client::Client::search_model`]
-pub type GetModelsReq<'a> = SearchReq<'a>;
+pub type SearchModelReq<'a> = SearchReq<'a>;
 
 /// Response of [`crate::client::Client::search_model`]
-pub type GetModelsRes = Vec<Model>;
+pub type SearchModelRes = Vec<Model>;
 
 #[cfg(test)]
 mod test {
   use std::assert_matches::assert_matches;
 
-  use crate::api::GetModelsReq;
+  use crate::api::SearchModelReq;
 
   #[test]
   fn test_serde_req() {
-    let req: GetModelsReq = GetModelsReq::default()
+    let req: SearchModelReq = SearchModelReq::default()
       .search("1")
       .author("2")
       .filter("3")

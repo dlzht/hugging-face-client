@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::GetSpacesReq,
+  api::SearchSpaceReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -12,7 +12,7 @@ async fn main() -> Result<()> {
   let client = Client::new(option)?;
 
   // get spaces
-  let req = GetSpacesReq::default()
+  let req = SearchSpaceReq::default()
     .search("suayptalha/Chat-with-Bitnet-b1.58-2B-4T")
     .full(true);
   let res = client.search_space(req).await?;

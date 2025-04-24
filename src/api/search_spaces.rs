@@ -1,20 +1,20 @@
 use crate::{api::SearchReq, space::Space};
 
 /// Request of [`crate::client::Client::search_space`]
-pub type GetSpacesReq<'a> = SearchReq<'a>;
+pub type SearchSpaceReq<'a> = SearchReq<'a>;
 
 /// Response of [`crate::client::Client::search_space`]
-pub type GetSpacesRes = Vec<Space>;
+pub type SearchSpaceRes = Vec<Space>;
 
 #[cfg(test)]
 mod test {
   use std::assert_matches::assert_matches;
 
-  use crate::api::GetSpacesReq;
+  use crate::api::SearchSpaceReq;
 
   #[test]
   fn test_serde_req() {
-    let req = GetSpacesReq::default()
+    let req = SearchSpaceReq::default()
       .search("1")
       .author("2")
       .filter("3")
