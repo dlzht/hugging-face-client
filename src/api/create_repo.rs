@@ -65,7 +65,7 @@ pub struct CreateRepoRes {
 
 impl CreateRepoRes {
   pub fn id(&self) -> &str {
-    &self.name
+    &self.id
   }
 
   pub fn name(&self) -> &str {
