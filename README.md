@@ -28,6 +28,7 @@ async fn main() {
 ```
 
 ### Get Model
+
 ```rust
 use hugging_face_client::api::GetModelReq;
 use hugging_face_client::client::{Client, ClientOption};
@@ -38,8 +39,8 @@ async fn main() {
   let client = Client::new(option).unwrap();
 
   // get model
-  let get_model_req = GetModelReq::new("microsoft/bitnet-b1.58-2B-4T");
-  let res = client.get_model(get_model_req).await?;
+  let req = GetModelReq::new("microsoft/bitnet-b1.58-2B-4T");
+  let res = client.get_model(req).await.unwrap();
   println!("{:#?}", res);
   Ok(())
 }
@@ -60,8 +61,8 @@ async fn main() {
 + ❌ GET /api/datasets/{repo_id}/parquet/{subset}/{split}/{n}.parquet
 + ❌ GET /api/datasets/{repo_id}/croissant
 + ✅ GET /api/datasets-tags-by-type
-+ ❌ GET /api/spaces
-+ ❌ GET /api/spaces/{repo_id} or /api/spaces/{repo_id}/revision/{revision} 
++ ✅ GET /api/spaces
++ ✅ GET /api/spaces/{repo_id} or /api/spaces/{repo_id}/revision/{revision} 
 
 ### Repo
 + ✅ POST /api/repos/create
