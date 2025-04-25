@@ -1,3 +1,5 @@
+use std::fmt::{Display, Formatter};
+
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -15,6 +17,16 @@ pub enum RepoType {
 impl Default for RepoType {
   fn default() -> Self {
     RepoType::Model
+  }
+}
+
+impl Display for RepoType {
+  fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+    match self {
+      RepoType::Dataset => f.write_str("dataset"),
+      RepoType::Space => f.write_str("space"),
+      RepoType::Model => f.write_str("model"),
+    }
   }
 }
 

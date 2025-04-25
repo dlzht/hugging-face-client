@@ -3,8 +3,9 @@ use reqwest::Method;
 use crate::{
   api::{
     CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
-    SearchDatasetReq, SearchDatasetRes, GetModelReq, GetModelRes, GetModelTagsRes, SearchModelReq,
-    SearchModelRes, GetSpaceReq, GetSpaceRes, SearchSpaceReq, SearchSpaceRes,
+    GetModelReq, GetModelRes, GetModelTagsRes, GetSpaceReq, GetSpaceRes, MoveRepoReq,
+    SearchDatasetReq, SearchDatasetRes, SearchModelReq, SearchModelRes, SearchSpaceReq,
+    SearchSpaceRes,
   },
   client::Client,
   errors::Result,
@@ -123,6 +124,16 @@ impl Client {
     let url = format!("{}/api/repos/delete", &self.api_endpoint);
     self
       .exec_request_without_response(&url, Method::DELETE, Some(&req))
+      .await
+  }
+
+  /// Move a repository (rename within the same namespace or transfer from user to organization).
+  ///
+  /// Endpoint: ` POST /api/repos/move`
+  pub async fn move_repo(&self, req: MoveRepoReq<'_>) -> Result<()> {
+    let url = format!("{}/api/repos/move", &self.api_endpoint);
+    self
+      .exec_request_without_response(&url, Method::POST, Some(&req))
       .await
   }
 }

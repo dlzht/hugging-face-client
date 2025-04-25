@@ -72,7 +72,7 @@ impl CreateRepoRes {
     &self.name
   }
 
- pub fn url(&self) -> &str {
+  pub fn url(&self) -> &str {
     &self.url
   }
 }

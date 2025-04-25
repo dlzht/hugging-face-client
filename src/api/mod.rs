@@ -37,6 +37,9 @@ pub use get_space::{GetSpaceReq, GetSpaceRes};
 mod search_spaces;
 pub use search_spaces::{SearchSpaceReq, SearchSpaceRes};
 
+mod move_repo;
+pub use move_repo::MoveRepoReq;
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

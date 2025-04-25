@@ -68,7 +68,7 @@ async fn main() {
 + ✅ POST /api/repos/create
 + ✅ DELETE /api/repos/delete
 + ❌ PUT /api/repos/{repo_type}/{repo_id}/settings
-+ ❌ POST /api/repos/move
++ ✅ POST /api/repos/move
 + ❌ User API
 + ❌ GET /api/whoami-v2
 + ❌ Organization API
