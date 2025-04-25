@@ -63,6 +63,7 @@ async fn main() {
 + ✅ GET /api/datasets-tags-by-type
 + ✅ GET /api/spaces
 + ✅ GET /api/spaces/{repo_id} or /api/spaces/{repo_id}/revision/{revision} 
++ ✅ GET /api/metrics
 
 ### Repo
 + ✅ POST /api/repos/create

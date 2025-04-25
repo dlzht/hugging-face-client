@@ -3,9 +3,9 @@ use reqwest::Method;
 use crate::{
   api::{
     CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
-    GetModelReq, GetModelRes, GetModelTagsRes, GetSpaceReq, GetSpaceRes, MoveRepoReq,
-    SearchDatasetReq, SearchDatasetRes, SearchModelReq, SearchModelRes, SearchSpaceReq,
-    SearchSpaceRes,
+    GetMetricsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetSpaceReq, GetSpaceRes,
+    MoveRepoReq, SearchDatasetReq, SearchDatasetRes, SearchModelReq, SearchModelRes,
+    SearchSpaceReq, SearchSpaceRes,
   },
   client::Client,
   errors::Result,
@@ -135,5 +135,14 @@ impl Client {
     self
       .exec_request_without_response(&url, Method::POST, Some(&req))
       .await
+  }
+
+  /// Gets all the available metrics in the Hub.
+  ///
+  /// Endpoint: `GET /api/metrics`
+  pub async fn get_metrics(&self) -> Result<GetMetricsRes> {
+    let url = format!("{}/api/metrics", &self.api_endpoint);
+    let req = if true { None } else { Some(&()) };
+    self.get_request(&url, req, false).await
   }
 }
