@@ -91,7 +91,7 @@ async fn main() {
 + ❌ GET /api/(models|spaces|datasets)/{namespace}/{repo}/resource-group
 
 ### Paper Pages
-+ ❌ GET /api/papers/{arxiv_id}
++ ✅ GET /api/papers/{arxiv_id}
 + ❌ GET /api/arxiv/{arxiv_id}/repos
 + ❌ GET /api/daily_papers
 
