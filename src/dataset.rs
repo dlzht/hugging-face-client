@@ -3,47 +3,44 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Dataset {
   #[serde(rename = "_id")]
-  id: String,
+  pub id: String,
 
   #[serde(rename = "id")]
-  name: String,
+  pub name: String,
 
-  author: String,
-
-  disabled: bool,
+  pub author: String,
+  pub disabled: bool,
 
   #[serde(rename = "trendingScore")]
-  trending_source: Option<usize>,
+  pub trending_source: Option<usize>,
 
-  private: bool,
-  likes: usize,
-  downloads: usize,
-  pipeline_tag: Option<String>,
-  library_name: Option<String>,
+  pub private: bool,
+  pub likes: usize,
+  pub downloads: usize,
+  pub pipeline_tag: Option<String>,
+  pub library_name: Option<String>,
 
   #[serde(rename = "createdAt")]
-  created_time: String,
-  tags: Vec<String>,
+  pub created_time: String,
 
-  gated: Option<bool>,
+  pub tags: Vec<String>,
+  pub gated: Option<bool>,
 
   #[serde(rename = "lastModified")]
-  last_modified: Option<String>,
+  pub last_modified: Option<String>,
 
-  sha: Option<String>,
-
-  description: Option<String>,
-
-  key: Option<String>,
+  pub sha: Option<String>,
+  pub description: Option<String>,
+  pub key: Option<String>,
 
   #[serde(rename = "cardData")]
-  card_data: Option<DatasetCardData>,
+  pub card_data: Option<DatasetCardData>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DatasetCardData {
-  license: Option<String>,
-  tags: Option<Vec<String>>,
-  task_categories: Option<Vec<String>>,
-  size_categories: Option<Vec<String>>,
+  pub license: Option<String>,
+  pub tags: Option<Vec<String>>,
+  pub task_categories: Option<Vec<String>>,
+  pub size_categories: Option<Vec<String>>,
 }

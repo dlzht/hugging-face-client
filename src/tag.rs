@@ -2,10 +2,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Tag {
-  id: String,
-  label: String,
-  tag_type: Option<TagType>,
-  sub_type: Option<String>,
+  pub id: String,
+  pub label: String,
+  pub tag_type: Option<TagType>,
+  pub sub_type: Option<String>,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash, Serialize, Deserialize)]

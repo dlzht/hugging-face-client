@@ -15,49 +15,47 @@ impl<'a> ArxivPaperReq<'a> {
 /// Request of [`crate::client::Client::arxiv_paper`]
 #[derive(Debug, Deserialize)]
 pub struct ArxivPaperRes {
-  id: String,
-  authors: Vec<ArxivPaperAuthor>,
+  pub id: String,
+  pub authors: Vec<ArxivPaperAuthor>,
 
   #[serde(rename = "publishedAt")]
-  published_time: String,
+  pub published_time: String,
 
   #[serde(rename = "submittedOnDailyAt")]
-  submitted_time: String,
+  pub submitted_time: String,
 
-  title: String,
-
-  submitted_by: Option<ArxivPaperUser>,
-
-  summary: Option<String>,
+  pub title: String,
+  pub submitted_by: Option<ArxivPaperUser>,
+  pub summary: Option<String>,
 
   #[serde(rename = "upvotes")]
-  up_votes: usize,
+  pub up_votes: usize,
 
-  discussion_id: Option<String>,
-
-  ai_keywords: Option<Vec<String>>,
+  pub discussion_id: Option<String>,
+  pub ai_keywords: Option<Vec<String>>,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct ArxivPaperAuthor {
   #[serde(rename = "_id")]
-  id: String,
-  user: Option<ArxivPaperUser>,
-  name: String,
-  status: Option<String>,
-  hidden: bool,
+  pub id: String,
+
+  pub user: Option<ArxivPaperUser>,
+  pub name: String,
+  pub status: Option<String>,
+  pub hidden: bool,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct ArxivPaperUser {
   #[serde(rename = "_id")]
-  id: String,
+  pub id: String,
 
   #[serde(rename = "avatarUrl")]
-  avatar_url: Option<String>,
+  pub avatar_url: Option<String>,
 
   #[serde(rename = "fullname")]
-  full_name: String,
+  pub full_name: String,
 
-  user: String,
+  pub user: String,
 }

@@ -5,27 +5,23 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Repo {
   #[serde(rename = "_id")]
-  id: String,
+  pub id: String,
 
   #[serde(rename = "id")]
-  name: String,
+  pub name: String,
 
-  author: String,
-
-  private: bool,
-
-  likes: usize,
-
-  tags: Option<Vec<String>>,
-
-  sha: Option<String>,
+  pub author: String,
+  pub private: bool,
+  pub likes: usize,
+  pub tags: Option<Vec<String>>,
+  pub sha: Option<String>,
 
   #[serde(rename = "lastModified")]
-  last_modified: Option<String>,
+  pub last_modified: Option<String>,
 
-  pipeline_tag: Option<String>,
+  pub pipeline_tag: Option<String>,
 
-  library_name: Option<String>,
+  pub library_name: Option<String>,
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize)]

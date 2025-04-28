@@ -3,29 +3,30 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Model {
   #[serde(rename = "_id")]
-  id: String,
+  pub id: String,
 
   #[serde(rename = "id")]
-  name: String,
-  model_id: Option<String>,
+  pub name: String,
+
+  pub model_id: Option<String>,
 
   #[serde(rename = "trendingScore")]
-  trending_source: Option<usize>,
+  pub trending_source: Option<usize>,
 
-  private: bool,
-  likes: usize,
-  downloads: usize,
-  pipeline_tag: Option<String>,
-  library_name: Option<String>,
+  pub private: bool,
+  pub likes: usize,
+  pub downloads: usize,
+  pub pipeline_tag: Option<String>,
+  pub library_name: Option<String>,
 
   #[serde(rename = "createdAt")]
-  created_time: String,
-  tags: Vec<String>,
+  pub created_time: String,
 
-  gated: Option<bool>,
+  pub tags: Vec<String>,
+  pub gated: Option<bool>,
 
   #[serde(rename = "lastModified")]
-  last_modified: Option<String>,
+  pub last_modified: Option<String>,
 
-  sha: Option<String>,
+  pub sha: Option<String>,
 }

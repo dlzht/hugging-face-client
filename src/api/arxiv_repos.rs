@@ -17,5 +17,5 @@ impl<'a> ArxivReposReq<'a> {
 /// Response of [`crate::client::Client::arxiv_repos`]
 #[derive(Debug, Deserialize)]
 pub struct ArxivReposRes {
-  models: Vec<Repo>,
+  pub models: Vec<Repo>,
 }

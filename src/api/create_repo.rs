@@ -56,25 +56,9 @@ impl<'a> CreateRepoReq<'a> {
 /// Response of [`crate::client::Client::create_repo`]
 #[derive(Debug, Deserialize)]
 pub struct CreateRepoRes {
-  id: String,
-
-  name: String,
-
-  url: String,
-}
-
-impl CreateRepoRes {
-  pub fn id(&self) -> &str {
-    &self.id
-  }
-
-  pub fn name(&self) -> &str {
-    &self.name
-  }
-
-  pub fn url(&self) -> &str {
-    &self.url
-  }
+  pub id: String,
+  pub name: String,
+  pub url: String,
 }
 
 #[cfg(test)]

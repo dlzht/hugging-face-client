@@ -5,44 +5,42 @@ use crate::{dataset::DatasetCardData, sibling::Sibling};
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Space {
   #[serde(rename = "_id")]
-  id: String,
+  pub id: String,
 
   #[serde(rename = "id")]
-  name: String,
+  pub name: String,
 
   #[serde(rename = "trendingScore")]
-  trending_source: Option<usize>,
+  pub trending_source: Option<usize>,
 
-  private: bool,
-  likes: usize,
+  pub private: bool,
+  pub likes: usize,
 
   #[serde(rename = "createdAt")]
-  created_time: String,
-  tags: Vec<String>,
+  pub created_time: String,
 
-  sdk: Option<SpaceSdkType>,
-
-  sha: Option<String>,
-
-  subdomain: Option<String>,
+  pub tags: Vec<String>,
+  pub sdk: Option<SpaceSdkType>,
+  pub sha: Option<String>,
+  pub subdomain: Option<String>,
 
   #[serde(rename = "lastModified")]
-  last_modified: Option<String>,
+  pub last_modified: Option<String>,
 
-  siblings: Option<Vec<Sibling>>,
+  pub siblings: Option<Vec<Sibling>>,
 
   #[serde(rename = "cardData")]
-  card_data: Option<DatasetCardData>,
+  pub card_data: Option<DatasetCardData>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SpaceCardData {
-  title: Option<String>,
-  emoji: Option<String>,
-  sdk_version: Option<String>,
-  app_file: Option<String>,
-  license: Option<String>,
-  short_description: Option<String>,
+  pub title: Option<String>,
+  pub emoji: Option<String>,
+  pub sdk_version: Option<String>,
+  pub app_file: Option<String>,
+  pub license: Option<String>,
+  pub short_description: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
