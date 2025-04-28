@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{dataset::DatasetCardData, sibling::Sibling};
+use crate::sibling::Sibling;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Space {
@@ -30,7 +30,7 @@ pub struct Space {
   pub siblings: Option<Vec<Sibling>>,
 
   #[serde(rename = "cardData")]
-  pub card_data: Option<DatasetCardData>,
+  pub card_data: Option<SpaceCardData>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
