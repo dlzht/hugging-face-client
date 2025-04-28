@@ -73,7 +73,7 @@ impl Client {
     self.get_request(&url, req, true).await
   }
 
-  /// Gets all the available dataset tags hosted in the Hub.
+  /// Gets all the available dataset tags hosted in the Hub
   ///
   /// Endpoint: `GET /api/datasets-tags-by-type`
   pub async fn get_dataset_tags(&self) -> Result<GetDatasetTagRes> {
@@ -108,7 +108,7 @@ impl Client {
     self.get_request(&url, req, true).await
   }
 
-  /// Create a repository, model repo by default.
+  /// Create a repository, model repo by default
   ///
   /// Endpoint:  POST /api/repos/create
   pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
@@ -137,7 +137,7 @@ impl Client {
       .await
   }
 
-  /// Gets all the available metrics in the Hub.
+  /// Gets all the available metrics in the Hub
   ///
   /// Endpoint: `GET /api/metrics`
   pub async fn get_metrics(&self) -> Result<GetMetricsRes> {

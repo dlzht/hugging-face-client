@@ -11,7 +11,7 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // arxiv paper
+  // arxiv repos
   let req = ArxivReposReq::new("2504.12285");
   let res = client.arxiv_repos(req).await?;
   println!("Arxiv Repos: {:#?}", res);

@@ -6,7 +6,7 @@ use crate::{
 
 impl Client {
   /// Get the API equivalent of the Paper page, i.e., metadata like authors, summary, and discussion
-  /// comments.
+  /// comments
   ///
   /// Endpoint: ` GET /api/papers/{arxiv_id}`
   pub async fn arxiv_paper(&self, req: ArxivPaperReq<'_>) -> Result<ArxivPaperRes> {
