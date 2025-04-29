@@ -44,10 +44,13 @@ mod get_metrics;
 pub use get_metrics::GetMetricsRes;
 
 mod arxiv_paper;
-pub use arxiv_paper::{ArxivPaperAuthor, ArxivPaperReq, ArxivPaperRes, ArxivPaperUser};
+pub use arxiv_paper::{ArxivPaperReq, ArxivPaperRes};
 
 mod arxiv_repos;
 pub use arxiv_repos::{ArxivReposReq, ArxivReposRes};
+
+mod arxiv_daily;
+pub use arxiv_daily::ArxivDailyRes;
 
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]

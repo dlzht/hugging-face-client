@@ -1,5 +1,5 @@
 use crate::{
-  api::{ArxivPaperReq, ArxivPaperRes, ArxivReposReq, ArxivReposRes},
+  api::{ArxivDailyRes, ArxivPaperReq, ArxivPaperRes, ArxivReposReq, ArxivReposRes},
   client::Client,
   errors::Result,
 };
@@ -22,5 +22,16 @@ impl Client {
     let url = format!("{}/api/arxiv/{}/repos", &self.api_endpoint, req.paper_id);
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, true).await
+  }
+
+  /// Get the daily papers curated by AK and the community
+  ///
+  /// Endpoint: `GET /api/daily_papers`
+  ///
+  /// TODO: support filter on date
+  pub async fn arxiv_daily(&self) -> Result<ArxivDailyRes> {
+    let url = format!("{}/api/daily_papers", &self.api_endpoint);
+    let req = if true { None } else { Some(&()) };
+    self.get_request(&url, req, false).await
   }
 }

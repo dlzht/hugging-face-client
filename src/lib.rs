@@ -40,6 +40,7 @@ pub mod api;
 pub mod client;
 pub mod errors;
 
+mod arxiv;
 mod config;
 mod dataset;
 mod metric;

@@ -92,8 +92,8 @@ async fn main() {
 
 ### Paper Pages
 + ✅ GET /api/papers/{arxiv_id}
-+ ❌ GET /api/arxiv/{arxiv_id}/repos
-+ ❌ GET /api/daily_papers
++ ✅ GET /api/arxiv/{arxiv_id}/repos
++ ✅ GET /api/daily_papers
 
 ### Collections
 + ❌ POST /api/collections
