@@ -1,6 +1,7 @@
 //! Async hub client
 
 mod arxiv;
+mod organization;
 mod repo;
 
 use std::time::Duration;

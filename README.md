@@ -75,7 +75,7 @@ async fn main() {
 + ❌ GET /api/whoami-v2
 
 ### Organization API
-+ ❌ GET /api/organizations/{organization_name}/members
++ ✅ GET /api/organizations/{organization_name}/members
 
 ### Resource Groups
 + ❌ GET /api/organizations/{name}/resource-groups

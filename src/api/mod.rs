@@ -52,6 +52,9 @@ pub use arxiv_repos::{ArxivReposReq, ArxivReposRes};
 mod arxiv_daily;
 pub use arxiv_daily::ArxivDailyRes;
 
+mod get_members;
+pub use get_members::{GetMembersReq, GetMembersRes};
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

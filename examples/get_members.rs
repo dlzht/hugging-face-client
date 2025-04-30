@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::GetModelReq,
+  api::GetMembersReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -11,9 +11,9 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // get model
-  let get_model_req = GetModelReq::new("microsoft/bitnet-b1.58-2B-4T");
-  let res = client.get_model(get_model_req).await?;
-  println!("Get Model: {:#?}", res);
+  // get members
+  let req = GetMembersReq::new("dlzht-org");
+  let res = client.get_members(req).await?;
+  println!("Get Members: {:#?}", res);
   Ok(())
 }
