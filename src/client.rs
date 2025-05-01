@@ -1,6 +1,7 @@
 //! Async hub client
 
 mod arxiv;
+mod collection;
 mod organization;
 mod repo;
 

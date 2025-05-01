@@ -41,11 +41,15 @@ pub mod client;
 pub mod errors;
 
 mod arxiv;
+mod collection;
 mod config;
 mod dataset;
 mod metric;
 mod model;
+mod paginamtion;
+mod provider;
 mod repo;
+mod runtime;
 mod sibling;
 mod sort;
 mod space;
