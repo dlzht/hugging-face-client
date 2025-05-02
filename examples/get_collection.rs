@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::{GetCollectionsReq, GetMembersReq},
+  api::GetCollectionReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -11,9 +11,9 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // get collections
-  let req = GetCollectionsReq::new().owner("facebook").limit(2);
-  let res = client.get_collections(req).await?;
-  println!("Get Collections: {:#?}", res);
+  // get collection
+  let req = GetCollectionReq::new("facebook/perception-lm-67f9783f171948c383ee7498");
+  let res = client.get_collection(req).await?;
+  println!("Get Collection: {:#?}", res);
   Ok(())
 }

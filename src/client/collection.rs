@@ -1,5 +1,5 @@
 use crate::{
-  api::{GetCollectionsReq, GetCollectionsRes},
+  api::{GetCollectionReq, GetCollectionRes, GetCollectionsReq, GetCollectionsRes},
   client::Client,
   errors::Result,
 };
@@ -11,5 +11,14 @@ impl Client {
   pub async fn get_collections(&self, req: GetCollectionsReq<'_>) -> Result<GetCollectionsRes> {
     let url = format!("{}/api/collections", &self.api_endpoint);
     self.get_request(&url, Some(&req), false).await
+  }
+
+  /// Get information about a collection
+  ///
+  /// Endpoint: ` GET /api/collections/{namespace}/{slug}-{id}`
+  pub async fn get_collection(&self, req: GetCollectionReq<'_>) -> Result<GetCollectionRes> {
+    let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
+    let req = if true { None } else { Some(&()) };
+    self.get_request(&url, req, false).await
   }
 }
