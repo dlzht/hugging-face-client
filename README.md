@@ -96,7 +96,7 @@ async fn main() {
 + ✅ GET /api/daily_papers
 
 ### Collections
-+ ❌ POST /api/collections
++ ✅ POST /api/collections
 + ✅ GET /api/collections/{namespace}/{slug}-{id}
 + ✅ GET /api/collections
 + ❌ PATCH /api/collections/{namespace}/{slug}-{id}

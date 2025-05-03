@@ -24,5 +24,6 @@ impl<'a> GetCollectionReq<'a> {
   }
 }
 
-/// Response of [`crate::client::Client::get_collection`]
+/// Response of [`crate::client::Client::get_collection`],
+/// [`crate::client::Client::create_collection`]
 pub type GetCollectionRes = Collection;

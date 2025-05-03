@@ -1,5 +1,9 @@
+use reqwest::Method;
+
 use crate::{
-  api::{GetCollectionReq, GetCollectionRes, GetCollectionsReq, GetCollectionsRes},
+  api::{
+    CreateCollectionReq, GetCollectionReq, GetCollectionRes, GetCollectionsReq, GetCollectionsRes,
+  },
   client::Client,
   errors::Result,
 };
@@ -20,5 +24,13 @@ impl Client {
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
+  }
+
+  /// Create a new collection on the Hub with a title
+  ///
+  /// Endpoint: ` POST /api/collections`
+  pub async fn create_collection(&self, req: CreateCollectionReq<'_>) -> Result<GetCollectionRes> {
+    let url = format!("{}/api/collections", &self.api_endpoint);
+    self.exec_request(&url, Method::POST, Some(&req)).await
   }
 }

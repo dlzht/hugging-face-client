@@ -61,6 +61,12 @@ pub use get_collections::{GetCollectionsReq, GetCollectionsRes};
 mod get_collection;
 pub use get_collection::{GetCollectionReq, GetCollectionRes};
 
+mod create_collection;
+pub use create_collection::CreateCollectionReq;
+
+mod create_collection_item;
+pub use create_collection_item::CreateCollectionItemReq;
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

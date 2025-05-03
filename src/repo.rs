@@ -34,6 +34,9 @@ pub enum RepoType {
 
   #[serde(rename = "model")]
   Model,
+
+  #[serde(rename = "paper")]
+  Paper,
 }
 
 impl Default for RepoType {
@@ -48,6 +51,7 @@ impl Display for RepoType {
       RepoType::Dataset => f.write_str("dataset"),
       RepoType::Space => f.write_str("space"),
       RepoType::Model => f.write_str("model"),
+      RepoType::Paper => f.write_str("paper"),
     }
   }
 }
