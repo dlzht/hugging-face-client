@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::CreateCollectionReq,
+  api::DeleteCollectionReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -11,10 +11,9 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // create repo
-  let req = CreateCollectionReq::new("my-collection-item05", "dlzht", true)
-    .description("Item05 of My Collection");
-  let res = client.create_collection(req).await?;
-  println!("Create Collection: {:#?}", res);
+  // delete collection
+  let req = DeleteCollectionReq::new("dlzht/my-collection-68174f008e267618d9d3d474");
+  let res = client.delete_collection(req).await?;
+  println!("Delete Collection: {:#?}", res);
   Ok(())
 }
