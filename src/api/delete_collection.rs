@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 /// Request of [`crate::client::Client::delete_collection`]
 #[derive(Debug, Serialize)]
 pub struct DeleteCollectionReq<'a> {
-  pub slug: &'a str,
+  pub(crate) slug: &'a str,
 }
 
 impl<'a> DeleteCollectionReq<'a> {

@@ -3,7 +3,8 @@ use reqwest::Method;
 use crate::{
   api::{
     CreateCollectionReq, DeleteCollectionReq, DeleteCollectionRes, GetCollectionReq,
-    GetCollectionRes, GetCollectionsReq, GetCollectionsRes,
+    GetCollectionRes, GetCollectionsReq, GetCollectionsRes, ModifyCollectionReq,
+    ModifyCollectionRes,
   },
   client::Client,
   errors::Result,
@@ -45,5 +46,16 @@ impl Client {
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
     let req = if true { None } else { Some(&()) };
     self.exec_request(&url, Method::DELETE, req).await
+  }
+
+  /// Update the metadata of a collection on the Hub
+  ///
+  /// Endpoint: `PATCH /api/collections/{namespace}/{slug}-{id}`
+  pub async fn modify_collection(
+    &self,
+    req: ModifyCollectionReq<'_>,
+  ) -> Result<ModifyCollectionRes> {
+    let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
+    self.exec_request(&url, Method::PATCH, Some(&req)).await
   }
 }
