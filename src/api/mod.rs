@@ -65,7 +65,7 @@ mod create_collection;
 pub use create_collection::CreateCollectionReq;
 
 mod create_collection_item;
-pub use create_collection_item::CreateCollectionItemReq;
+pub use create_collection_item::{CreateCollectionItemReq, CreateCollectionItemRes};
 
 mod delete_collection;
 pub use delete_collection::{DeleteCollectionReq, DeleteCollectionRes};

@@ -1,7 +1,5 @@
 use serde::Serialize;
 
-use crate::api::create_collection_item::CreateCollectionItemReq;
-
 /// Request of [`crate::client::Client::create_collection`]
 #[derive(Debug, Serialize)]
 pub struct CreateCollectionReq<'a> {
@@ -11,8 +9,8 @@ pub struct CreateCollectionReq<'a> {
   #[serde(skip_serializing_if = "Option::is_none")]
   description: Option<&'a str>,
 
-  #[serde(skip_serializing_if = "Option::is_none")]
-  item: Option<CreateCollectionItemReq<'a>>,
+  // #[serde(skip_serializing_if = "Option::is_none")]
+  // item: Option<CreateCollectionItem<'a>>,
   private: bool,
 }
 
@@ -22,7 +20,7 @@ impl<'a> CreateCollectionReq<'a> {
       title,
       namespace,
       description: None,
-      item: None,
+      // item: None,
       private,
     }
   }
@@ -32,8 +30,8 @@ impl<'a> CreateCollectionReq<'a> {
     self
   }
 
-  pub fn item(mut self, item: CreateCollectionItemReq<'a>) -> Self {
-    self.item = Some(item);
-    self
-  }
+  // pub fn item(mut self, item: CreateCollectionItem<'a>) -> Self {
+  //   self.item = Some(item);
+  //   self
+  // }
 }

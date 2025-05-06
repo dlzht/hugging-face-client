@@ -1,5 +1,6 @@
 use hugging_face_client::{
-  api::CreateCollectionReq,
+  RepoType,
+  api::CreateCollectionItemReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -11,10 +12,14 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // create collection
-  let req = CreateCollectionReq::new("my-collection-item05", "dlzht", true)
-    .description("Item05 of My Collection");
-  let res = client.create_collection(req).await?;
-  println!("Create Collection: {:#?}", res);
+  // create collection item
+  let req = CreateCollectionItemReq::new(
+    "dlzht/my-collection01-68199a8c4bf36b6da52840ca",
+    "microsoft/bitnet-b1.58-2B-4T",
+    RepoType::Model,
+  )
+  .note("Add microsoft/bitnet-b1.58-2B-4T to my collection");
+  let res = client.create_collection_item(req).await?;
+  println!("Create Collection Item: {:#?}", res);
   Ok(())
 }

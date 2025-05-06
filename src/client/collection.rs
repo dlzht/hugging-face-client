@@ -2,9 +2,9 @@ use reqwest::Method;
 
 use crate::{
   api::{
-    CreateCollectionReq, DeleteCollectionReq, DeleteCollectionRes, GetCollectionReq,
-    GetCollectionRes, GetCollectionsReq, GetCollectionsRes, ModifyCollectionReq,
-    ModifyCollectionRes,
+    CreateCollectionItemReq, CreateCollectionItemRes, CreateCollectionReq, DeleteCollectionReq,
+    DeleteCollectionRes, GetCollectionReq, GetCollectionRes, GetCollectionsReq, GetCollectionsRes,
+    ModifyCollectionReq, ModifyCollectionRes,
   },
   client::Client,
   errors::Result,
@@ -57,5 +57,19 @@ impl Client {
   ) -> Result<ModifyCollectionRes> {
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
     self.exec_request(&url, Method::PATCH, Some(&req)).await
+  }
+
+  /// Add an item to a collection
+  ///
+  /// Endpoint: `POST /api/collections/{namespace}/{slug}-{id}/items`
+  pub async fn create_collection_item(
+    &self,
+    req: CreateCollectionItemReq<'_>,
+  ) -> Result<CreateCollectionItemRes> {
+    let url = format!(
+      "{}/api/collections/{}/items",
+      &self.api_endpoint, req.collection_slug
+    );
+    self.exec_request(&url, Method::POST, Some(&req)).await
   }
 }
