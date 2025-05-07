@@ -4,7 +4,7 @@ use crate::{
   api::{
     CreateCollectionItemReq, CreateCollectionItemRes, CreateCollectionReq, DeleteCollectionReq,
     DeleteCollectionRes, GetCollectionReq, GetCollectionRes, GetCollectionsReq, GetCollectionsRes,
-    ModifyCollectionReq, ModifyCollectionRes,
+    ModifyCollectionItemReq, ModifyCollectionItemRes, ModifyCollectionReq, ModifyCollectionRes,
   },
   client::Client,
   errors::Result,
@@ -71,5 +71,19 @@ impl Client {
       &self.api_endpoint, req.collection_slug
     );
     self.exec_request(&url, Method::POST, Some(&req)).await
+  }
+
+  /// Update an item in a collection
+  ///
+  /// Endpoint: `PATCH /api/collections/{namespace}/{slug}-{id}/items`
+  pub async fn modify_collection_item(
+    &self,
+    req: ModifyCollectionItemReq<'_>,
+  ) -> Result<ModifyCollectionItemRes> {
+    let url = format!(
+      "{}/api/collections/{}/items/{}",
+      &self.api_endpoint, req.collection_slug, req.item_id
+    );
+    self.exec_request(&url, Method::PATCH, Some(&req)).await
   }
 }

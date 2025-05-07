@@ -8,7 +8,7 @@ pub struct CreateCollectionItemReq<'a> {
   #[serde(skip_serializing)]
   pub(crate) collection_slug: &'a str,
 
-  pub(crate) item: CreateCollectionItemInner<'a>,
+  item: CreateCollectionItemInner<'a>,
   pub(crate) note: Option<&'a str>,
 }
 

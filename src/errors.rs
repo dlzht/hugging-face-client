@@ -24,6 +24,8 @@ pub enum Error {
     source: reqwest::Error,
     #[snafu(implicit)]
     location: Location,
+    // #[snafu(backtrace)]
+    // backtrace: Backtrace,
   },
 
   #[snafu(display("Failed to serialize JSON"))]
