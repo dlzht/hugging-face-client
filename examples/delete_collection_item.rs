@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::ModifyCollectionItemReq,
+  api::DeleteCollectionItemReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -11,13 +11,12 @@ async fn main() -> Result<()> {
   let option = ClientOption::new(access_token).proxy(access_proxy);
   let client = Client::new(option)?;
 
-  // modify collection item
-  let req = ModifyCollectionItemReq::new(
+  // delete collection item
+  let req = DeleteCollectionItemReq::new(
     "dlzht/my-collection01-68199a8c4bf36b6da52840ca",
-    "681ad073b02f43b4b5bad154",
-  )
-  .note("Modified note");
-  let res = client.modify_collection_item(req).await?;
-  println!("Modify Collection Item: {:#?}", res);
+    "681c21446ce76b62a299f9e8",
+  );
+  let res = client.delete_collection_item(req).await?;
+  println!("Delete Collection Item: {:#?}", res);
   Ok(())
 }

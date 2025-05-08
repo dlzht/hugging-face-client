@@ -2,9 +2,10 @@ use reqwest::Method;
 
 use crate::{
   api::{
-    CreateCollectionItemReq, CreateCollectionItemRes, CreateCollectionReq, DeleteCollectionReq,
-    DeleteCollectionRes, GetCollectionReq, GetCollectionRes, GetCollectionsReq, GetCollectionsRes,
-    ModifyCollectionItemReq, ModifyCollectionItemRes, ModifyCollectionReq, ModifyCollectionRes,
+    CreateCollectionItemReq, CreateCollectionItemRes, CreateCollectionReq, DeleteCollectionItemReq,
+    DeleteCollectionItemRes, DeleteCollectionReq, DeleteCollectionRes, GetCollectionReq,
+    GetCollectionRes, GetCollectionsReq, GetCollectionsRes, ModifyCollectionItemReq,
+    ModifyCollectionItemRes, ModifyCollectionReq, ModifyCollectionRes,
   },
   client::Client,
   errors::Result,
@@ -85,5 +86,20 @@ impl Client {
       &self.api_endpoint, req.collection_slug, req.item_id
     );
     self.exec_request(&url, Method::PATCH, Some(&req)).await
+  }
+
+  /// Remove an item from a collection
+  ///
+  /// Endpoint: `Delete /api/collections/{namespace}/{slug}-{id}/items`
+  pub async fn delete_collection_item(
+    &self,
+    req: DeleteCollectionItemReq<'_>,
+  ) -> Result<DeleteCollectionItemRes> {
+    let url = format!(
+      "{}/api/collections/{}/items/{}",
+      &self.api_endpoint, req.collection_slug, req.item_id
+    );
+    let req = if true { None } else { Some(&()) };
+    self.exec_request(&url, Method::DELETE, req).await
   }
 }

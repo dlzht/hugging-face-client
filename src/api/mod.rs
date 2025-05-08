@@ -75,6 +75,10 @@ pub use modify_collection::{ModifyCollectionReq, ModifyCollectionRes};
 
 mod modify_collection_item;
 pub use modify_collection_item::{ModifyCollectionItemReq, ModifyCollectionItemRes};
+
+mod delete_collection_item;
+pub use delete_collection_item::{DeleteCollectionItemReq, DeleteCollectionItemRes};
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

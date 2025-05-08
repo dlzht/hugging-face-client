@@ -103,4 +103,4 @@ async fn main() {
 + ✅ DELETE /api/collections/{namespace}/{slug}-{id}
 + ✅ POST /api/collections/{namespace}/{slug}-{id}/item
 + ✅ PATCH /api/collections/{namespace}/{slug}-{id}/items/{item_id}
-+ ❌ DELETE /api/collections/{namespace}/{slug}-{id}/items/{item_id}
++ ✅ DELETE /api/collections/{namespace}/{slug}-{id}/items/{item_id}
