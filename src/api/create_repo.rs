@@ -84,6 +84,6 @@ mod test {
   fn test_serde_res() {
     let json = "{\"url\":\"https://huggingface.co/dlzht/my-repo0\",\"name\":\"dlzht/my-repo0\",\"id\":\"680673d1e332a61dd92e9237\"}";
     let res = serde_json::from_str::<CreateRepoRes>(json);
-    assert_matches!(res, Ok(v) if v.id() == "680673d1e332a61dd92e9237" && v.name() == "dlzht/my-repo0" && v.url() == "https://huggingface.co/dlzht/my-repo0");
+    assert_matches!(res, Ok(v) if v.id == "680673d1e332a61dd92e9237" && v.name == "dlzht/my-repo0" && v.url == "https://huggingface.co/dlzht/my-repo0");
   }
 }

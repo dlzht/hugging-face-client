@@ -72,7 +72,7 @@ async fn main() {
 + ✅ POST /api/repos/move
 
 ### User API
-+ ❌ GET /api/whoami-v2
++ ✅ GET /api/whoami-v2
 
 ### Organization API
 + ✅ GET /api/organizations/{organization_name}/members

@@ -4,6 +4,7 @@ mod arxiv;
 mod collection;
 mod organization;
 mod repo;
+mod user;
 
 use std::time::Duration;
 

@@ -1,8 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{
-  RepoType, provider::InferenceProvider, runtime::Runtime, space::SpaceSdkType, user::User,
-};
+use crate::{RepoType, provider::InferenceProvider, runtime::Runtime, space::SpaceSdkType};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Collection {
@@ -14,7 +12,7 @@ pub struct Collection {
   #[serde(rename = "lastUpdated")]
   pub last_updated: String,
 
-  pub owner: User,
+  pub owner: CollectionUser,
   pub items: Vec<CollectionItem>,
   pub theme: String,
   pub private: bool,
@@ -40,7 +38,7 @@ pub struct CollectionItem {
   pub author: String,
 
   #[serde(rename = "authorData")]
-  pub author_data: Option<User>,
+  pub author_data: Option<CollectionUser>,
 
   #[serde(rename = "createAt")]
   pub create_time: Option<String>,
@@ -62,4 +60,33 @@ pub struct CollectionItem {
   // pub ai_category: Option<String>,
   // pub ai_short_description: Option<String?,
   pub available_inference_providers: Option<Vec<InferenceProvider>>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CollectionUser {
+  #[serde(rename = "avatarUrl")]
+  pub avatar_url: String,
+
+  #[serde(rename = "fullname")]
+  pub full_name: String,
+
+  pub name: String,
+
+  #[serde(rename = "type")]
+  pub user_type: String,
+
+  #[serde(rename = "isHf")]
+  pub is_hf: bool,
+
+  #[serde(rename = "isHfAdmin")]
+  pub is_hf_admin: bool,
+
+  #[serde(rename = "isMod")]
+  pub is_mod: bool,
+
+  #[serde(rename = "isEnterprise")]
+  pub is_enterprise: Option<bool>,
+
+  #[serde(rename = "followerCount")]
+  pub follower_count: Option<usize>,
 }
