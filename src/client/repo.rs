@@ -3,9 +3,9 @@ use reqwest::Method;
 use crate::{
   api::{
     CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
-    GetMetricsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetSpaceReq, GetSpaceRes,
-    MoveRepoReq, SearchDatasetReq, SearchDatasetRes, SearchModelReq, SearchModelRes,
-    SearchSpaceReq, SearchSpaceRes,
+    GetMetricsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetParquetReq, GetParquetRes,
+    GetSpaceReq, GetSpaceRes, MoveRepoReq, SearchDatasetReq, SearchDatasetRes, SearchModelReq,
+    SearchModelRes, SearchSpaceReq, SearchSpaceRes,
   },
   client::Client,
   errors::Result,
@@ -119,7 +119,6 @@ impl Client {
   /// Delete a repository, model repo by default
   ///
   /// Endpoint: `DELETE /api/repos/delete`
-  ///
   pub async fn delete_repo(&self, req: DeleteRepoReq<'_>) -> Result<()> {
     let url = format!("{}/api/repos/delete", &self.api_endpoint);
     self
@@ -142,6 +141,18 @@ impl Client {
   /// Endpoint: `GET /api/metrics`
   pub async fn get_metrics(&self) -> Result<GetMetricsRes> {
     let url = format!("{}/api/metrics", &self.api_endpoint);
+    let req = if true { None } else { Some(&()) };
+    self.get_request(&url, req, false).await
+  }
+
+  /// Get the list of auto-converted parquet files
+  ///
+  /// Endpoint: `GET /api/datasets/{repo_id}/parquet`
+  pub async fn get_parquet(&self, req: GetParquetReq<'_>) -> Result<GetParquetRes> {
+    let url = format!(
+      "{}/api/datasets/{}/parquet",
+      &self.api_endpoint, req.repo_name
+    );
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
   }

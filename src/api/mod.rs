@@ -82,6 +82,9 @@ pub use delete_collection_item::{DeleteCollectionItemReq, DeleteCollectionItemRe
 mod get_userinfo;
 pub use get_userinfo::GetUserInfoRes;
 
+mod get_parquet;
+pub use get_parquet::{GetParquetReq, GetParquetRes};
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]
