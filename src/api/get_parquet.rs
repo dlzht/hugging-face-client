@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use serde::{Deserialize, Serialize};
 
 /// Request of [`crate::client::Client::get_parquet`]
@@ -5,21 +7,37 @@ use serde::{Deserialize, Serialize};
 pub struct GetParquetReq<'a> {
   #[serde(rename = "repo_id")]
   pub(crate) repo_name: &'a str,
+
+  pub(crate) subset: Option<&'a str>,
+
+  pub(crate) split: Option<&'a str>,
 }
 
 impl<'a> GetParquetReq<'a> {
-  pub fn new(repo_name: &str) -> GetParquetReq<'_> {
-    GetParquetReq { repo_name }
+  pub fn new(repo_name: &'a str) -> GetParquetReq<'a> {
+    GetParquetReq {
+      repo_name,
+      subset: None,
+      split: None,
+    }
+  }
+
+  pub fn subset(mut self, subset: &'a str) -> Self {
+    self.subset = Some(subset);
+    self
+  }
+
+  pub fn split(mut self, split: &'a str) -> Self {
+    self.split = Some(split);
+    self
   }
 }
 
 /// Response of [`crate::client::Client::get_parquet`]
 #[derive(Debug, Deserialize)]
-pub struct GetParquetRes {
-  pub default: GetParquetTrain,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct GetParquetTrain {
-  pub train: Vec<String>,
+#[serde(untagged)]
+pub enum GetParquetRes {
+  Repo(HashMap<String, HashMap<String, Vec<String>>>),
+  Subset(HashMap<String, Vec<String>>),
+  Split(Vec<String>),
 }

@@ -148,11 +148,25 @@ impl Client {
   /// Get the list of auto-converted parquet files
   ///
   /// Endpoint: `GET /api/datasets/{repo_id}/parquet`
+  ///
+  /// Endpoint: `GET /api/datasets/{repo_id}/parquet/{subset}`
+  ///
+  /// Endpoint: `GET /api/datasets/{repo_id}/parquet/{subset}/{split}`
   pub async fn get_parquet(&self, req: GetParquetReq<'_>) -> Result<GetParquetRes> {
-    let url = format!(
-      "{}/api/datasets/{}/parquet",
-      &self.api_endpoint, req.repo_name
-    );
+    let url = match (req.subset, req.split) {
+      (None, None) | (None, Some(_)) => format!(
+        "{}/api/datasets/{}/parquet",
+        &self.api_endpoint, req.repo_name
+      ),
+      (Some(subset), None) => format!(
+        "{}/api/datasets/{}/parquet/{}",
+        &self.api_endpoint, req.repo_name, subset
+      ),
+      (Some(subset), Some(split)) => format!(
+        "{}/api/datasets/{}/parquet/{}/{}",
+        &self.api_endpoint, req.repo_name, subset, split
+      ),
+    };
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
   }

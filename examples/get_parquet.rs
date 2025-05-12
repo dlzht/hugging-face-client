@@ -1,5 +1,5 @@
 use hugging_face_client::{
-  api::{GetDatasetReq, GetParquetReq},
+  api::GetParquetReq,
   client::{Client, ClientOption},
   errors::Result,
 };
@@ -12,7 +12,17 @@ async fn main() -> Result<()> {
   let client = Client::new(option)?;
 
   // get parquet
-  let req = GetParquetReq::new("fka/awesome-chatgpt-prompts");
+  let req = GetParquetReq::new("DMindAI/DMind_Benchmark");
+  
+  // get parquet.subset
+  // let req = GetParquetReq::new("DMindAI/DMind_Benchmark")
+  //   .subset("objective_infrastructure")
+
+
+  // get parquet.subset.split
+  // let req = GetParquetReq::new("DMindAI/DMind_Benchmark")
+  //   .subset("objective_infrastructure")
+  //   .split("Infrastructrue");
   let res = client.get_parquet(req).await?;
   println!("Get Parquet: {:#?}", res);
   Ok(())
