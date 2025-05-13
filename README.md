@@ -58,7 +58,7 @@ async fn main() {
 + ✅ GET /api/datasets
 + ✅ GET /api/datasets/{repo_id} or /api/datasets/{repo_id}/revision/{revision}
 + ✅ GET /api/datasets/{repo_id}/parquet
-+ ❌ GET /api/datasets/{repo_id}/parquet/{subset}/{split}/{n}.parquet
++ ✅ GET /api/datasets/{repo_id}/parquet/{subset}/{split}/{n}.parquet
 + ❌ GET /api/datasets/{repo_id}/croissant
 + ✅ GET /api/datasets-tags-by-type
 + ✅ GET /api/spaces

@@ -1,11 +1,14 @@
+use bytes::Bytes;
+use futures_core::Stream;
 use reqwest::Method;
 
 use crate::{
   api::{
-    CreateRepoReq, CreateRepoRes, DeleteRepoReq, GetDatasetReq, GetDatasetRes, GetDatasetTagRes,
-    GetMetricsRes, GetModelReq, GetModelRes, GetModelTagsRes, GetParquetReq, GetParquetRes,
-    GetSpaceReq, GetSpaceRes, MoveRepoReq, SearchDatasetReq, SearchDatasetRes, SearchModelReq,
-    SearchModelRes, SearchSpaceReq, SearchSpaceRes,
+    CreateRepoReq, CreateRepoRes, DeleteRepoReq, DownloadParquetReq, DownloadParquetRes,
+    GetDatasetReq, GetDatasetRes, GetDatasetTagRes, GetMetricsRes, GetModelReq, GetModelRes,
+    GetModelTagsRes, GetParquetReq, GetParquetRes, GetSpaceReq, GetSpaceRes, MoveRepoReq,
+    SearchDatasetReq, SearchDatasetRes, SearchModelReq, SearchModelRes, SearchSpaceReq,
+    SearchSpaceRes,
   },
   client::Client,
   errors::Result,
@@ -169,5 +172,47 @@ impl Client {
     };
     let req = if true { None } else { Some(&()) };
     self.get_request(&url, req, false).await
+  }
+
+  /// Get the nth shard of the auto-converted parquet files, for a specific subset (also called
+  /// “config”) and split.
+  ///
+  /// Endpoint: ` GET /api/datasets/{repo_id}/parquet/{subset}/{split}/{n}.parquet`
+  pub async fn download_parquet(
+    &self,
+    req: DownloadParquetReq<'_>,
+  ) -> impl Stream<Item = Result<Bytes>> {
+    let url = format!(
+      "{}/api/datasets/{}/parquet/{}/{}/{}.parquet",
+      &self.api_endpoint, req.repo_name, req.subset, req.split, req.nth
+    );
+    let stream = self
+      .http_client
+      .get(url)
+      .bearer_auth(&self.access_token)
+      .send()
+      .await
+      .unwrap()
+      .bytes_stream();
+    DownloadParquetRes::new(stream)
+  }
+
+  ///  Get the nth shard of the auto-converted parquet files, same as [`Client::download_parquet`]
+  ///
+  /// `url`: full url of parquet file, you can get this from [`Client::get_parquet`],
+  /// this is an example: `https://huggingface.co/api/datasets/DMindAI/DMind_Benchmark/parquet/objective_infrastructure/Infrastructrue/0.parquet`
+  pub async fn download_parquet_by_url(
+    &self,
+    url: impl AsRef<str>,
+  ) -> impl Stream<Item = Result<Bytes>> {
+    let stream = self
+      .http_client
+      .get(url.as_ref())
+      .bearer_auth(&self.access_token)
+      .send()
+      .await
+      .unwrap()
+      .bytes_stream();
+    DownloadParquetRes::new(stream)
   }
 }

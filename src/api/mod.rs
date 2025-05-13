@@ -85,6 +85,9 @@ pub use get_userinfo::GetUserInfoRes;
 mod get_parquet;
 pub use get_parquet::{GetParquetReq, GetParquetRes};
 
+mod download_parquet;
+pub use download_parquet::{DownloadParquetReq, DownloadParquetRes};
+
 /// Global response format of Hugging Face Hub API
 #[derive(Debug, Clone, Deserialize)]
 #[serde(untagged)]

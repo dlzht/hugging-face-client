@@ -13,11 +13,10 @@ async fn main() -> Result<()> {
 
   // get parquet
   let req = GetParquetReq::new("DMindAI/DMind_Benchmark");
-  
+
   // get parquet.subset
   // let req = GetParquetReq::new("DMindAI/DMind_Benchmark")
   //   .subset("objective_infrastructure")
-
 
   // get parquet.subset.split
   // let req = GetParquetReq::new("DMindAI/DMind_Benchmark")
