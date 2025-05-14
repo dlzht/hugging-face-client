@@ -6,7 +6,6 @@ impl Client {
   /// Endpoint: `GET /api/whoami-v2`
   pub async fn get_userinfo(&self) -> Result<GetUserInfoRes> {
     let url = format!("{}/api/whoami-v2", &self.api_endpoint);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, true).await
+    self.get_request(&url, self.empty_req(), true).await
   }
 }

@@ -11,8 +11,7 @@ impl Client {
   /// Endpoint: ` GET /api/papers/{arxiv_id}`
   pub async fn arxiv_paper(&self, req: ArxivPaperReq<'_>) -> Result<ArxivPaperRes> {
     let url = format!("{}/api/papers/{}", &self.api_endpoint, req.paper_id);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 
   /// Get all the models, datasets, and Spaces that refer to a paper
@@ -20,8 +19,7 @@ impl Client {
   /// Endpoint: ` GET /api/arxiv/{arxiv_id}/repos`
   pub async fn arxiv_repos(&self, req: ArxivReposReq<'_>) -> Result<ArxivReposRes> {
     let url = format!("{}/api/arxiv/{}/repos", &self.api_endpoint, req.paper_id);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, true).await
+    self.get_request(&url, self.empty_req(), true).await
   }
 
   /// Get the daily papers curated by AK and the community
@@ -31,7 +29,6 @@ impl Client {
   /// TODO: support filter on date
   pub async fn arxiv_daily(&self) -> Result<ArxivDailyRes> {
     let url = format!("{}/api/daily_papers", &self.api_endpoint);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 }

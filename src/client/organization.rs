@@ -13,7 +13,6 @@ impl Client {
       "{}/api/organizations/{}/members",
       &self.api_endpoint, req.org_name
     );
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, true).await
+    self.get_request(&url, self.empty_req(), true).await
   }
 }

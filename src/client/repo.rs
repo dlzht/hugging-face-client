@@ -37,8 +37,7 @@ impl Client {
     } else {
       format!("{}/api/models/{}", &self.api_endpoint, req.repo_name)
     };
-    let req = if true { None } else { Some(&req) };
-    self.get_request(&url, req, true).await
+    self.get_request(&url, self.empty_req(), true).await
   }
 
   /// Gets all the available model tags hosted in the Hub
@@ -46,8 +45,7 @@ impl Client {
   /// Endpoint: `GET /api/models-tags-by-type`
   pub async fn get_model_tags(&self) -> Result<GetModelTagsRes> {
     let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 
   /// Get information from all datasets in the Hub
@@ -72,8 +70,7 @@ impl Client {
     } else {
       format!("{}/api/datasets/{}", &self.api_endpoint, req.repo_name)
     };
-    let req = if true { None } else { Some(&req) };
-    self.get_request(&url, req, true).await
+    self.get_request(&url, self.empty_req(), true).await
   }
 
   /// Gets all the available dataset tags hosted in the Hub
@@ -81,8 +78,7 @@ impl Client {
   /// Endpoint: `GET /api/datasets-tags-by-type`
   pub async fn get_dataset_tags(&self) -> Result<GetDatasetTagRes> {
     let url = format!("{}/api/models-tags-by-type", &self.api_endpoint);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 
   /// Get information from all spaces in the Hub
@@ -107,8 +103,7 @@ impl Client {
     } else {
       format!("{}/api/spaces/{}", &self.api_endpoint, req.repo_name)
     };
-    let req = if true { None } else { Some(&req) };
-    self.get_request(&url, req, true).await
+    self.get_request(&url, self.empty_req(), true).await
   }
 
   /// Create a repository, model repo by default
@@ -144,8 +139,7 @@ impl Client {
   /// Endpoint: `GET /api/metrics`
   pub async fn get_metrics(&self) -> Result<GetMetricsRes> {
     let url = format!("{}/api/metrics", &self.api_endpoint);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 
   /// Get the list of auto-converted parquet files
@@ -170,8 +164,7 @@ impl Client {
         &self.api_endpoint, req.repo_name, subset, split
       ),
     };
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 
   /// Get the nth shard of the auto-converted parquet files, for a specific subset (also called

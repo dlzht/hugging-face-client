@@ -220,4 +220,9 @@ impl Client {
       .context(ReqwestClientSnafu)?;
     Ok(())
   }
+  
+  #[inline]
+  fn empty_req(&self) -> Option<&()> {
+    if true { None } else { Some(&())}
+  }
 }

@@ -25,8 +25,7 @@ impl Client {
   /// Endpoint: `GET /api/collections/{namespace}/{slug}-{id}`
   pub async fn get_collection(&self, req: GetCollectionReq<'_>) -> Result<GetCollectionRes> {
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
-    let req = if true { None } else { Some(&()) };
-    self.get_request(&url, req, false).await
+    self.get_request(&url, self.empty_req(), false).await
   }
 
   /// Create a new collection on the Hub with a title
@@ -45,8 +44,7 @@ impl Client {
     req: DeleteCollectionReq<'_>,
   ) -> Result<DeleteCollectionRes> {
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
-    let req = if true { None } else { Some(&()) };
-    self.exec_request(&url, Method::DELETE, req).await
+    self.exec_request(&url, Method::DELETE, self.empty_req()).await
   }
 
   /// Update the metadata of a collection on the Hub
@@ -99,7 +97,6 @@ impl Client {
       "{}/api/collections/{}/items/{}",
       &self.api_endpoint, req.collection_slug, req.item_id
     );
-    let req = if true { None } else { Some(&()) };
-    self.exec_request(&url, Method::DELETE, req).await
+    self.exec_request(&url, Method::DELETE, self.empty_req()).await
   }
 }
