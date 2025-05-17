@@ -4,13 +4,21 @@ use crate::arxiv::ArxivPaper;
 
 /// Request of [`crate::client::Client::arxiv_paper`]
 #[derive(Debug, Serialize)]
-pub struct ArxivPaperReq<'a> {
-  pub(crate) paper_id: &'a str,
+pub struct ArxivPaperReq {
+  pub(crate) paper_id: String,
 }
 
-impl<'a> ArxivPaperReq<'a> {
-  pub fn new(paper_id: &'a str) -> Self {
-    Self { paper_id }
+impl<'a> ArxivPaperReq {
+  pub fn new(paper_id: impl Into<String>) -> Self {
+    Self { paper_id: paper_id.into() }
+  }
+}
+
+impl<T: Into<String>> From<T> for ArxivPaperReq {
+  fn from(paper_id: T) -> Self {
+    Self {
+      paper_id: paper_id.into(),
+    }
   }
 }
 

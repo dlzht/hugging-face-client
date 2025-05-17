@@ -9,7 +9,8 @@ impl Client {
   /// comments
   ///
   /// Endpoint: ` GET /api/papers/{arxiv_id}`
-  pub async fn arxiv_paper(&self, req: ArxivPaperReq<'_>) -> Result<ArxivPaperRes> {
+  pub async fn arxiv_paper(&self, req: impl Into<ArxivPaperReq>) -> Result<ArxivPaperRes> {
+    let req = req.into();
     let url = format!("{}/api/papers/{}", &self.api_endpoint, req.paper_id);
     self.get_request(&url, self.empty_req(), false).await
   }

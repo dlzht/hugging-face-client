@@ -15,5 +15,9 @@ async fn main() -> Result<()> {
   let req = ArxivPaperReq::new("2504.12285");
   let res = client.arxiv_paper(req).await?;
   println!("Arxiv Paper: {:#?}", res);
+  
+  // for convenient 
+  let res = client.arxiv_paper("2504.12285").await?;
+  println!("Arxiv Paper: {:#?}", res);
   Ok(())
 }
