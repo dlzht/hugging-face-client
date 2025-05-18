@@ -15,5 +15,9 @@ async fn main() -> Result<()> {
   let req = ArxivReposReq::new("2504.12285");
   let res = client.arxiv_repos(req).await?;
   println!("Arxiv Repos: {:#?}", res);
+
+  // for convenient
+  let res = client.arxiv_repos("2504.1228").await?;
+  println!("Arxiv Repos: {:#?}", res);
   Ok(())
 }

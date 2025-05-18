@@ -1,16 +1,24 @@
 use serde::{Deserialize, Serialize};
-
+use crate::api::ArxivPaperReq;
 use crate::repo::Repo;
 
 /// Request of [`crate::client::Client::arxiv_repos`]
 #[derive(Debug, Serialize)]
-pub struct ArxivReposReq<'a> {
-  pub(crate) paper_id: &'a str,
+pub struct ArxivReposReq {
+  pub(crate) paper_id: String,
 }
 
-impl<'a> ArxivReposReq<'a> {
-  pub fn new(arxiv_id: &'a str) -> Self {
-    ArxivReposReq { paper_id: arxiv_id }
+impl ArxivReposReq {
+  pub fn new(paper_id: impl Into<String>) -> Self {
+    ArxivReposReq { paper_id: paper_id.into() }
+  }
+}
+
+impl<T: Into<String>> From<T> for ArxivReposReq {
+  fn from(paper_id: T) -> Self {
+    Self {
+      paper_id: paper_id.into(),
+    }
   }
 }
 

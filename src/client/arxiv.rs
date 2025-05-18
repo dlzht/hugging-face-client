@@ -18,7 +18,8 @@ impl Client {
   /// Get all the models, datasets, and Spaces that refer to a paper
   ///
   /// Endpoint: ` GET /api/arxiv/{arxiv_id}/repos`
-  pub async fn arxiv_repos(&self, req: ArxivReposReq<'_>) -> Result<ArxivReposRes> {
+  pub async fn arxiv_repos(&self, req: impl Into<ArxivReposReq>) -> Result<ArxivReposRes> {
+    let req = req.into();
     let url = format!("{}/api/arxiv/{}/repos", &self.api_endpoint, req.paper_id);
     self.get_request(&url, self.empty_req(), true).await
   }
