@@ -16,5 +16,10 @@ async fn main() -> Result<()> {
     .description("Item05 of My Collection");
   let res = client.create_collection(req).await?;
   println!("Create Collection: {:#?}", res);
+
+  // for convenient
+  let res = client.create_collection(("my-collection-item05", "dlzht", true)).await?;
+  println!("Create Collection: {:#?}", res);
+
   Ok(())
 }

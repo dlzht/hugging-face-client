@@ -31,7 +31,8 @@ impl Client {
   /// Create a new collection on the Hub with a title
   ///
   /// Endpoint: `POST /api/collections`
-  pub async fn create_collection(&self, req: CreateCollectionReq<'_>) -> Result<GetCollectionRes> {
+  pub async fn create_collection(&self, req: impl Into<CreateCollectionReq>) -> Result<GetCollectionRes> {
+    let req = req.into();
     let url = format!("{}/api/collections", &self.api_endpoint);
     self.exec_request(&url, Method::POST, Some(&req)).await
   }
