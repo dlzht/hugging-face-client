@@ -64,8 +64,9 @@ impl Client {
   /// Endpoint: `POST /api/collections/{namespace}/{slug}-{id}/items`
   pub async fn create_collection_item(
     &self,
-    req: CreateCollectionItemReq<'_>,
+    req: impl Into<CreateCollectionItemReq>,
   ) -> Result<CreateCollectionItemRes> {
+    let req = req.into();
     let url = format!(
       "{}/api/collections/{}/items",
       &self.api_endpoint, req.collection_slug

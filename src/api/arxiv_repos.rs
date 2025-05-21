@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use crate::api::ArxivPaperReq;
 use crate::repo::Repo;
 
 /// Request of [`crate::client::Client::arxiv_repos`]

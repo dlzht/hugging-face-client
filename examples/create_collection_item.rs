@@ -1,8 +1,8 @@
 use hugging_face_client::{
-  RepoType,
   api::CreateCollectionItemReq,
   client::{Client, ClientOption},
   errors::Result,
+  RepoType,
 };
 
 #[tokio::main(flavor = "current_thread")]
@@ -21,5 +21,16 @@ async fn main() -> Result<()> {
   .note("Add microsoft/bitnet-b1.58-2B-4T to my collection");
   let res = client.create_collection_item(req).await?;
   println!("Create Collection Item: {:#?}", res);
+
+  // for convenient
+  let res = client
+    .create_collection_item((
+      "dlzht/my-collection01-68199a8c4bf36b6da52840ca",
+      "microsoft/bitnet-b1.58-2B-4T",
+      RepoType::Model,
+    ))
+    .await?;
+  println!("Create Collection Item: {:#?}", res);
+
   Ok(())
 }
