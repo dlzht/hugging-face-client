@@ -109,7 +109,8 @@ impl Client {
   /// Create a repository, model repo by default
   ///
   /// Endpoint:  POST /api/repos/create
-  pub async fn create_repo(&self, req: CreateRepoReq<'_>) -> Result<CreateRepoRes> {
+  pub async fn create_repo(&self, req: impl Into<CreateRepoReq>) -> Result<CreateRepoRes> {
+    let req = req.into();
     let url = format!("{}/api/repos/create", &self.api_endpoint);
     self.exec_request(&url, Method::POST, Some(&req)).await
   }

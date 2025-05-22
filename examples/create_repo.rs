@@ -18,5 +18,9 @@ async fn main() -> Result<()> {
     .private(true);
   let res = client.create_repo(req).await?;
   println!("Create Repo: {:#?}", res);
+  
+  // for convenient
+  let res = client.create_repo("example-repo").await?;
+  println!("Create Repo: {:#?}", res);
   Ok(())
 }

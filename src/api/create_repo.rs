@@ -4,14 +4,14 @@ use crate::{repo::RepoType, space::SpaceSdkType};
 
 /// Request of [`crate::client::Client::create_repo`]
 #[derive(Debug, Serialize)]
-pub struct CreateRepoReq<'a> {
-  name: &'a str,
+pub struct CreateRepoReq {
+  name: String,
 
   #[serde(rename = "type")]
   repo_type: RepoType,
 
   #[serde(skip_serializing_if = "Option::is_none")]
-  organization: Option<&'a str>,
+  organization: Option<String>,
 
   private: bool,
 
@@ -19,10 +19,10 @@ pub struct CreateRepoReq<'a> {
   sdk: Option<SpaceSdkType>,
 }
 
-impl<'a> CreateRepoReq<'a> {
-  pub fn new(name: &'a str) -> Self {
+impl CreateRepoReq {
+  pub fn new(name: impl Into<String>) -> Self {
     CreateRepoReq {
-      name,
+      name: name.into(),
       repo_type: RepoType::default(),
       organization: None,
       private: false,
@@ -35,8 +35,8 @@ impl<'a> CreateRepoReq<'a> {
     self
   }
 
-  pub fn organization(mut self, organization: &'a str) -> Self {
-    self.organization = Some(organization);
+  pub fn organization(mut self, organization: impl Into<String>) -> Self {
+    self.organization = Some(organization.into());
     self
   }
 
@@ -53,6 +53,17 @@ impl<'a> CreateRepoReq<'a> {
   }
 }
 
+impl<T: Into<String>> From<T> for CreateRepoReq {
+  fn from(value: T) -> Self {
+    Self {
+      name: value.into(),
+      repo_type: Default::default(),
+      organization: None,
+      private: false,
+      sdk: None,
+    }
+  }
+}
 /// Response of [`crate::client::Client::create_repo`]
 #[derive(Debug, Deserialize)]
 pub struct CreateRepoRes {
