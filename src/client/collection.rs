@@ -42,8 +42,9 @@ impl Client {
   /// Endpoint: `DELETE /api/collections/{namespace}/{slug}-{id}`
   pub async fn delete_collection(
     &self,
-    req: DeleteCollectionReq<'_>,
+    req: impl Into<DeleteCollectionReq>,
   ) -> Result<DeleteCollectionRes> {
+    let req = req.into();
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
     self.exec_request(&url, Method::DELETE, self.empty_req()).await
   }
