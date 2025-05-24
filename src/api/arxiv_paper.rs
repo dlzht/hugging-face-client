@@ -10,7 +10,9 @@ pub struct ArxivPaperReq {
 
 impl<'a> ArxivPaperReq {
   pub fn new(paper_id: impl Into<String>) -> Self {
-    Self { paper_id: paper_id.into() }
+    Self {
+      paper_id: paper_id.into(),
+    }
   }
 }
 

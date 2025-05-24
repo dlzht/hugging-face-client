@@ -31,7 +31,10 @@ impl Client {
   /// Create a new collection on the Hub with a title
   ///
   /// Endpoint: `POST /api/collections`
-  pub async fn create_collection(&self, req: impl Into<CreateCollectionReq>) -> Result<GetCollectionRes> {
+  pub async fn create_collection(
+    &self,
+    req: impl Into<CreateCollectionReq>,
+  ) -> Result<GetCollectionRes> {
     let req = req.into();
     let url = format!("{}/api/collections", &self.api_endpoint);
     self.exec_request(&url, Method::POST, Some(&req)).await
@@ -46,7 +49,9 @@ impl Client {
   ) -> Result<DeleteCollectionRes> {
     let req = req.into();
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
-    self.exec_request(&url, Method::DELETE, self.empty_req()).await
+    self
+      .exec_request(&url, Method::DELETE, self.empty_req())
+      .await
   }
 
   /// Update the metadata of a collection on the Hub
@@ -94,12 +99,15 @@ impl Client {
   /// Endpoint: `Delete /api/collections/{namespace}/{slug}-{id}/items`
   pub async fn delete_collection_item(
     &self,
-    req: DeleteCollectionItemReq<'_>,
+    req: impl Into<DeleteCollectionItemReq>,
   ) -> Result<DeleteCollectionItemRes> {
+    let req = req.into();
     let url = format!(
       "{}/api/collections/{}/items/{}",
       &self.api_endpoint, req.collection_slug, req.item_id
     );
-    self.exec_request(&url, Method::DELETE, self.empty_req()).await
+    self
+      .exec_request(&url, Method::DELETE, self.empty_req())
+      .await
   }
 }

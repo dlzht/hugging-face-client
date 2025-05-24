@@ -14,9 +14,7 @@ impl DeleteCollectionReq {
 
 impl<T: Into<String>> From<T> for DeleteCollectionReq {
   fn from(value: T) -> Self {
-    Self {
-      slug: value.into(),
-    } 
+    Self { slug: value.into() }
   }
 }
 

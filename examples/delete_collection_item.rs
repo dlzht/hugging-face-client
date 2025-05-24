@@ -18,5 +18,15 @@ async fn main() -> Result<()> {
   );
   let res = client.delete_collection_item(req).await?;
   println!("Delete Collection Item: {:#?}", res);
+
+  // for convenient
+  let res = client
+    .delete_collection_item((
+      "dlzht/my-collection01-68199a8c4bf36b6da52840ca",
+      "681c21446ce76b62a299f9e8",
+    ))
+    .await?;
+  println!("Delete Collection Item: {:#?}", res);
+
   Ok(())
 }

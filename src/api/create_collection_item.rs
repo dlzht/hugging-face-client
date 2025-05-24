@@ -22,7 +22,11 @@ struct CreateCollectionItemInner {
 }
 
 impl<'a> CreateCollectionItemReq {
-  pub fn new(collection_slug: impl Into<String>, item_id: impl Into<String>, item_type: RepoType) -> Self {
+  pub fn new(
+    collection_slug: impl Into<String>,
+    item_id: impl Into<String>,
+    item_type: RepoType,
+  ) -> Self {
     let item = CreateCollectionItemInner {
       item_type,
       id: item_id.into(),

@@ -1,8 +1,8 @@
 use hugging_face_client::{
+  RepoType,
   api::CreateCollectionItemReq,
   client::{Client, ClientOption},
   errors::Result,
-  RepoType,
 };
 
 #[tokio::main(flavor = "current_thread")]

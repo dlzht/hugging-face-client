@@ -15,5 +15,9 @@ async fn main() -> Result<()> {
   let req = DeleteCollectionReq::new("dlzht/my-collection-68174f008e267618d9d3d474");
   let res = client.delete_collection(req).await?;
   println!("Delete Collection: {:#?}", res);
+
+  // for convenient
+  let res = client.delete_collection("dlzht/my-collection-68174f008e267618d9d3d474").await?;
+  println!("Delete Collection: {:#?}", res);
   Ok(())
 }

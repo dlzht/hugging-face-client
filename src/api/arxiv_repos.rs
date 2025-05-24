@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+
 use crate::repo::Repo;
 
 /// Request of [`crate::client::Client::arxiv_repos`]
@@ -9,7 +10,9 @@ pub struct ArxivReposReq {
 
 impl ArxivReposReq {
   pub fn new(paper_id: impl Into<String>) -> Self {
-    ArxivReposReq { paper_id: paper_id.into() }
+    ArxivReposReq {
+      paper_id: paper_id.into(),
+    }
   }
 }
 
