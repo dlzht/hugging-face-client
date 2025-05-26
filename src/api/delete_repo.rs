@@ -4,20 +4,20 @@ use crate::RepoType;
 
 /// Request of [`crate::client::Client::delete_repo`]
 #[derive(Debug, Serialize)]
-pub struct DeleteRepoReq<'a> {
-  name: &'a str,
+pub struct DeleteRepoReq {
+  name: String,
 
   #[serde(rename = "type")]
   repo_type: RepoType,
 
   #[serde(skip_serializing_if = "Option::is_none")]
-  organization: Option<&'a str>,
+  organization: Option<String>,
 }
 
-impl<'a> DeleteRepoReq<'a> {
-  pub fn new(name: &'a str) -> Self {
+impl DeleteRepoReq {
+  pub fn new(name: impl Into<String>) -> Self {
     DeleteRepoReq {
-      name,
+      name: name.into(),
       repo_type: RepoType::default(),
       organization: None,
     }
@@ -28,9 +28,19 @@ impl<'a> DeleteRepoReq<'a> {
     self
   }
 
-  pub fn organization(mut self, organization: &'a str) -> Self {
-    self.organization = Some(organization);
+  pub fn organization(mut self, organization: impl Into<String>) -> Self {
+    self.organization = Some(organization.into());
     self
+  }
+}
+
+impl<T: Into<String>> From<T> for DeleteRepoReq {
+  fn from(value: T) -> Self {
+    Self {
+      name: value.into(),
+      repo_type: Default::default(),
+      organization: None,
+    }
   }
 }
 

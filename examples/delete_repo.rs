@@ -14,5 +14,8 @@ async fn main() -> Result<()> {
 
   // create repo
   let req = DeleteRepoReq::new("example-repo").repo_type(RepoType::Model);
-  client.delete_repo(req).await
+  let _ = client.delete_repo(req).await;
+
+  // for convenient
+  client.delete_repo("example-repo").await
 }

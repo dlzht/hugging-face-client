@@ -118,7 +118,8 @@ impl Client {
   /// Delete a repository, model repo by default
   ///
   /// Endpoint: `DELETE /api/repos/delete`
-  pub async fn delete_repo(&self, req: DeleteRepoReq<'_>) -> Result<()> {
+  pub async fn delete_repo(&self, req: impl Into<DeleteRepoReq>) -> Result<()> {
+    let req = req.into();
     let url = format!("{}/api/repos/delete", &self.api_endpoint);
     self
       .exec_request_without_response(&url, Method::DELETE, Some(&req))
