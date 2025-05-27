@@ -13,30 +13,45 @@ use crate::errors::{ReqwestClientSnafu, Result};
 
 /// Request of [`crate::client::Client::download_parquet`]
 #[derive(Debug, Serialize)]
-pub struct DownloadParquetReq<'a> {
+pub struct DownloadParquetReq {
   #[serde(rename = "repo_id")]
-  pub(crate) repo_name: &'a str,
+  pub(crate) repo_name: String,
 
-  pub(crate) subset: &'a str,
+  pub(crate) subset: String,
 
-  pub(crate) split: &'a str,
+  pub(crate) split: String,
 
   pub(crate) nth: usize,
 }
 
-impl<'a> DownloadParquetReq<'a> {
-  pub fn new(repo_name: &'a str, subset: &'a str, split: &'a str) -> DownloadParquetReq<'a> {
+impl DownloadParquetReq {
+  pub fn new(
+    repo_name: impl Into<String>,
+    subset: impl Into<String>,
+    split: impl Into<String>,
+  ) -> Self {
     DownloadParquetReq {
-      repo_name,
-      subset,
-      split,
+      repo_name: repo_name.into(),
+      subset: subset.into(),
+      split: split.into(),
       nth: 0,
     }
   }
 
-  pub fn nth(mut self, nth: usize) -> DownloadParquetReq<'a> {
+  pub fn nth(mut self, nth: usize) -> Self {
     self.nth = nth;
     self
+  }
+}
+
+impl<T: Into<String>, U: Into<String>, P: Into<String>> From<(T, U, P)> for DownloadParquetReq {
+  fn from(value: (T, U, P)) -> Self {
+    Self {
+      repo_name: value.0.into(),
+      subset: value.1.into(),
+      split: value.2.into(),
+      nth: 0,
+    }
   }
 }
 

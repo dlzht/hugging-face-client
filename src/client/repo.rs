@@ -175,8 +175,9 @@ impl Client {
   /// Endpoint: ` GET /api/datasets/{repo_id}/parquet/{subset}/{split}/{n}.parquet`
   pub async fn download_parquet(
     &self,
-    req: DownloadParquetReq<'_>,
+    req: impl Into<DownloadParquetReq>,
   ) -> impl Stream<Item = Result<Bytes>> {
+    let req = req.into();
     let url = format!(
       "{}/api/datasets/{}/parquet/{}/{}/{}.parquet",
       &self.api_endpoint, req.repo_name, req.subset, req.split, req.nth
