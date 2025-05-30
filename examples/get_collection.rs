@@ -15,5 +15,11 @@ async fn main() -> Result<()> {
   let req = GetCollectionReq::new("facebook/perception-lm-67f9783f171948c383ee7498");
   let res = client.get_collection(req).await?;
   println!("Get Collection: {:#?}", res);
+
+  // for convenient
+  let res = client
+    .get_collection("facebook/perception-lm-67f9783f171948c383ee7498")
+    .await?;
+  println!("Get Collection: {:#?}", res);
   Ok(())
 }

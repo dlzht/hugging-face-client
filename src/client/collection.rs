@@ -23,7 +23,8 @@ impl Client {
   /// Get information about a collection
   ///
   /// Endpoint: `GET /api/collections/{namespace}/{slug}-{id}`
-  pub async fn get_collection(&self, req: GetCollectionReq<'_>) -> Result<GetCollectionRes> {
+  pub async fn get_collection(&self, req: impl Into<GetCollectionReq>) -> Result<GetCollectionRes> {
+    let req = req.into();
     let url = format!("{}/api/collections/{}", &self.api_endpoint, req.slug);
     self.get_request(&url, self.empty_req(), false).await
   }

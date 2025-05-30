@@ -4,13 +4,13 @@ use crate::collection::Collection;
 
 /// Request of [`crate::client::Client::get_collection`]
 #[derive(Debug, Serialize)]
-pub struct GetCollectionReq<'a> {
+pub struct GetCollectionReq {
   // pub(crate) namespace: &'a str,
-  pub(crate) slug: &'a str,
+  pub(crate) slug: String,
   // pub(crate) id: &'a str,
 }
 
-impl<'a> GetCollectionReq<'a> {
+impl GetCollectionReq {
   // pub fn new(namespace: &'a str, slug: &'a str, id: &'a str) -> Self {
   //   GetCollectionReq {
   //     namespace,
@@ -19,8 +19,14 @@ impl<'a> GetCollectionReq<'a> {
   //   }
   // }
 
-  pub fn new(slug: &'a str) -> Self {
-    GetCollectionReq { slug }
+  pub fn new(slug: impl Into<String>) -> Self {
+    GetCollectionReq { slug: slug.into() }
+  }
+}
+
+impl<T: Into<String>> From<T> for GetCollectionReq {
+  fn from(s: T) -> Self {
+    Self { slug: s.into() }
   }
 }
 
