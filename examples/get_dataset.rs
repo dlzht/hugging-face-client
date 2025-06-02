@@ -15,5 +15,9 @@ async fn main() -> Result<()> {
   let req = GetDatasetReq::new("fka/awesome-chatgpt-prompts");
   let res = client.get_dataset(req).await?;
   println!("Get Model: {:#?}", res);
+
+  // for convenient
+  let res = client.get_dataset("fka/awesome-chatgpt-prompts").await?;
+  println!("Get Model: {:#?}", res);
   Ok(())
 }

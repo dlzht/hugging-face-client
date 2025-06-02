@@ -61,7 +61,8 @@ impl Client {
   /// Endpoint: `GET /api/datasets/{repo_id}` or
   ///
   /// Endpoint: `GET /api/datasets/{repo_id}/revision/{revision}`
-  pub async fn get_dataset(&self, req: GetDatasetReq<'_>) -> Result<GetDatasetRes> {
+  pub async fn get_dataset(&self, req: impl Into<GetDatasetReq>) -> Result<GetDatasetRes> {
+    let req = req.into();
     let url = if let Some(revision) = req.revision {
       format!(
         "{}/api/datasets/{}/revision/{}",
